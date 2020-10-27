@@ -13,23 +13,17 @@ export const Routes = () => {
         <Route path="/" exact>
           <Home />
         </Route>
-        {/* TODO: add components */}
         <Route path="/register" exact>
           <Register />
         </Route>
         <Route path="/login" exact>
-          {/* TODO: add components\ */}
           <Login />
         </Route>
         <Route path="/feed" exact>
           <Feed />
         </Route>
-        <Route path="/profile" exact>
-          //TODO: add components
-        </Route>
-        <Route path="/posts" exact>
-          //TODO: add components
-        </Route>
+        <Route path="/profile" exact></Route>
+        <Route path="/posts" exact></Route>
         <Route path="/create/post" exact>
           <CreatePost />
         </Route>

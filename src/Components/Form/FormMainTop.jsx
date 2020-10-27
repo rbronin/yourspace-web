@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography, Button, FormLabel } from "@material-ui/core";
+import { FormLabel } from "@material-ui/core";
 import SocialRegButton from "./SocialRegButton";
 
 export default function RegRightTop(props) {

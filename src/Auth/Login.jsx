@@ -3,21 +3,12 @@ import {
   Grid,
   FormGroup,
   FormControl,
-  Box,
   Typography,
-  Input,
-  Button,
-  FormLabel,
   InputAdornment,
   Container,
   TextField,
 } from "@material-ui/core";
-import {
-  PersonOutlined,
-  MailOutlineOutlined,
-  SecurityOutlined,
-  FaceOutlined,
-} from "@material-ui/icons";
+import { MailOutlineOutlined, SecurityOutlined } from "@material-ui/icons";
 import { grey } from "@material-ui/core/colors";
 
 import FormSide from "../Components/Form/FormSide";

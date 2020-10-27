@@ -1,17 +1,8 @@
 import React from "react";
-import {
-  Grid,
-  Container,
-  Card,
-  TextField,
-  AppBar,
-  IconButton,
-  Typography,
-  Toolbar,
-} from "@material-ui/core";
+import { Grid, Container } from "@material-ui/core";
 import AppBarHome from "../Components/Feed/AppBarHome";
 import Post from "../Components/Post/Post";
-import CreatePost from "../Components/Post/CreatePost";
+//import CreatePost from "../Components/Post/CreatePost";
 import { Link } from "react-router-dom";
 
 export default function Feed() {

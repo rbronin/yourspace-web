@@ -1,7 +1,4 @@
-import React from "react";
 import { makeStyles, fade } from "@material-ui/core/styles";
-import { teal } from "@material-ui/core/colors";
-import { FullscreenExit } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
