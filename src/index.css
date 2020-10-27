@@ -1,13 +1,135 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  font-family: "Lato", sans-serif;
+  /* font-family: "Exo", sans-serif; */
+  /* font-family: "Exo 2", sans-serif; */
+  /* font-family: "Fira Sans", sans-serif; */
+  /* font-family: "Montserrat", sans-serif; */
+  /* font-family: "Poppins", sans-serif; */
+  background-color: #fefefe;
+  /* color: #008fa9; */
+  color: #49ada0;
+}
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+.bg-primary {
+  /* background-color: #008fa9; */
+  background-color: #49ada0;
+  color: #fefefe;
+}
+.appbar {
+  background-color: #49ada0;
+  background: #49ada0;
+  color: #49ada0;
+}
+.cl-primary {
+  /* color: #008fa9; */
+  color: #49ada0;
+}
+.reg-left-grid {
+  height: 100vh;
+}
+.font-bold {
+  font-weight: bold;
+  font-size: xx-large;
+  text-align: center;
+}
+.reg-top {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* margin-left: 200px; */
+  margin-top: 3vh;
+}
+.top-label {
+  font-family: "Poppins", sans-serif;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 200;
+  font-size: smaller;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.btn-primary {
+  background-color: #49ada0;
+  color: #fefefe;
+  border: 0px;
+  border-radius: 20px;
+  font-size: small;
+  font-weight: 300;
+  padding: 13px;
+  width: 12rem;
+  margin: 20px auto 10px auto;
+}
+.btn-outlined {
+  background-color: #49ada0;
+  color: #fefefe;
+  border: 1px solid #fefefe;
+  border-radius: 20px;
+  font-size: small;
+  font-weight: 400;
+  padding: 13px;
+  width: 12rem;
+  margin: 25px auto 10px auto;
+}
+.btn-outlined-center {
+  background-color: #49ada0;
+  color: #fefefe;
+  border: 1px solid #fefefe;
+  border-radius: 20px;
+  font-size: small;
+  font-weight: 400;
+  padding: 13px;
+  width: 12rem;
+  margin: 25px 5rem 10px 5rem;
+}
+.btn-outlined-center:focus {
+  border: 1px solid #fefefe;
+  border-radius: 20px;
+}
+@media screen and (max-width: 600px) {
+  .btn-outlined-center {
+    width: 5rem;
+    padding: 5px;
+    margin: 15px 1rem 10px 1rem;
+  }
+}
+@media screen and (max-width: 900px) {
+  .btn-outlined-center {
+    width: 5rem;
+    padding: 5px;
+    margin: 15px 1.2rem 10px 2.2rem;
+  }
+}
+.container {
+  margin: 10rem auto 10rem auto;
+}
+.center {
+  margin: 1px auto 1px auto;
+}
+.btn-rounded {
+  background-color: #fefefe;
+  border: 1px solid #b1b9b8;
+  border-radius: 100%;
+  width: fit-content;
+  padding: 7px;
+  margin: 0px 10px 0px 10px;
+}
+.p {
+  font-family: "Exo", sans-serif;
+  font-size: medium;
+  text-align: center;
+}
+.input-dec {
+  color: #49ada0;
+}
+.bolder {
+  text-align: center;
+}
+.logo-right {
+  color: #f50057;
+  background-color: #fefefe;
 }
