@@ -10,6 +10,7 @@ export default function Feed() {
     <Grid xl="12" sm="12" direction="column">
       <AppBarHome />
       <Link to="/create/post">Create Post</Link>
+      <Link to="/profile">Your Profile</Link>
       <Container maxWidth="md">
         <Post username="ravics" avatar="RB" />
       </Container>
