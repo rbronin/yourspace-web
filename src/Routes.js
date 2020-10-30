@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Register from "./Auth/Register";
-import Home from "./Core/Home";
 import Login from "./Auth/Login";
+import Home from "./Core/Home";
 import Feed from "./Core/Feed";
 import CreatePost from "./Components/Post/CreatePost";
+import Profile from "./Components/Users/Profile";
 
 export const Routes = () => {
   return (
@@ -22,7 +23,9 @@ export const Routes = () => {
         <Route path="/feed" exact>
           <Feed />
         </Route>
-        <Route path="/profile" exact></Route>
+        <Route path="/profile" exact>
+          <Profile />
+        </Route>
         <Route path="/posts" exact></Route>
         <Route path="/create/post" exact>
           <CreatePost />

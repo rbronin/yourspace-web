@@ -7,6 +7,7 @@ import {
   InputAdornment,
   Container,
   TextField,
+  Button,
 } from "@material-ui/core";
 import { MailOutlineOutlined, SecurityOutlined } from "@material-ui/icons";
 import { grey } from "@material-ui/core/colors";
@@ -78,14 +79,17 @@ export default function Login() {
                     }}
                   />
                 </FormControl>
-                <FormControl margin="normal">
+                <FormControl margin="dense">
+                  <Link className="center link" to="/feed">
+                    <Button variant="contained">SIGN IN</Button>
+                  </Link>
+                </FormControl>
+
+                {/* <FormControl margin="normal">
                   <Typography align="center" variant="subtitle2">
                     Forgot Password?
                   </Typography>
-                </FormControl>
-                <Link className="center" to="/feed">
-                  <button className="btn-primary">SIGN IN</button>
-                </Link>
+                </FormControl> */}
               </FormGroup>
             </Grid>
           </Container>

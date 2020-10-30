@@ -9,7 +9,8 @@ body {
   /* font-family: "Poppins", sans-serif; */
   background-color: #fefefe;
   /* color: #008fa9; */
-  color: #49ada0;
+  /* color: #49ada0; */
+  color: #3b6fd6;
 }
 .link {
   text-decoration: none;
@@ -17,17 +18,21 @@ body {
 }
 .bg-primary {
   /* background-color: #008fa9; */
-  background-color: #49ada0;
+  /* background-color: #49ada0; */
+  background-color: #3b6fd6;
   color: #fefefe;
 }
 .appbar {
-  background-color: #49ada0;
-  background: #49ada0;
+  /* background-color: #49ada0; */
+  background-color: #3b6fd6;
+  /* background: #49ada0; */
+  background: #3b6fd6;
   color: #49ada0;
 }
 .cl-primary {
   /* color: #008fa9; */
-  color: #49ada0;
+  /* color: #49ada0; */
+  color: #3b6fd6;
 }
 .reg-left-grid {
   height: 100vh;
@@ -54,7 +59,8 @@ body {
 }
 
 .btn-primary {
-  background-color: #49ada0;
+  /* background-color: #49ada0; */
+  background-color: #3b6fd6;
   color: #fefefe;
   border: 0px;
   border-radius: 20px;
@@ -65,7 +71,8 @@ body {
   margin: 20px auto 10px auto;
 }
 .btn-outlined {
-  background-color: #49ada0;
+  /* background-color: #49ada0; */
+  background-color: #3b6fd6;
   color: #fefefe;
   border: 1px solid #fefefe;
   border-radius: 20px;
@@ -76,7 +83,7 @@ body {
   margin: 25px auto 10px auto;
 }
 .btn-outlined-center {
-  background-color: #49ada0;
+  background-color: #3b6fd6;
   color: #fefefe;
   border: 1px solid #fefefe;
   border-radius: 20px;
@@ -110,6 +117,7 @@ body {
 .center {
   margin: 1px auto 1px auto;
 }
+
 .btn-rounded {
   background-color: #fefefe;
   border: 1px solid #b1b9b8;
@@ -124,7 +132,7 @@ body {
   text-align: center;
 }
 .input-dec {
-  color: #49ada0;
+  color: #3b6fd6;
 }
 .bolder {
   text-align: center;
@@ -132,4 +140,24 @@ body {
 .logo-right {
   color: #f50057;
   background-color: #fefefe;
+}
+
+.formside-btn-mr {
+  margin: 1px 5rem 1px 7rem;
+}
+
+@media screen and (max-width: 600px) {
+  .formside-btn-mr {
+    margin: auto;
+  }
+}
+
+.avatar-img {
+  border: 0px;
+  border-radius: 2rem;
+}
+@media screen and (max-width: 600px) {
+  /* .avatar-img {
+    margin: 2rem auto 1rem 2rem;
+  } */
 }

@@ -6,6 +6,7 @@ import {
   TextField,
   InputAdornment,
   Container,
+  Button,
 } from "@material-ui/core";
 import {
   PersonOutlined,
@@ -115,7 +116,11 @@ export default function Register() {
                     }}
                   />
                 </FormControl>
-                <button className="btn-primary">SIGN UP</button>
+                <FormControl margin="dense">
+                  <Button variant="contained" color="primary">
+                    SIGN UP
+                  </Button>
+                </FormControl>
               </FormGroup>
             </Grid>
           </Container>
