@@ -1,31 +1,28 @@
-import React from "react";
-import {
-  Card,
-  Grid,
-  Avatar,
-  CardHeader,
-  IconButton,
-  CardMedia,
-  CardContent,
-  Typography,
-  CardActions,
-} from "@material-ui/core";
+import React, { useEffect, useState, useContext } from "react";
+import clsx from "clsx";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import List from "@material-ui/core/List";
+import { Typography, Avatar, Box, Collapse, Divider } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { red } from "@material-ui/core/colors";
-import {
-  FavoriteBorderOutlined,
-  MoreVertOutlined,
-  CommentOutlined,
-  ShareOutlined,
-} from "@material-ui/icons";
+import { IconButton } from "@material-ui/core";
+import PostComments from "./PostComments";
+import { addLikes, addComments, getAUser } from "../../Config/server";
+import { UserCxt } from "../../Config/UserContext";
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: "1rem",
-    marginBottom: "1.5rem",
+    maxWidth: 345,
+    maxHeight: 200,
   },
   media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
+    height: 300, // 16:9
   },
   expand: {
     transform: "rotate(0deg)",
@@ -38,57 +35,164 @@ const useStyles = makeStyles((theme) => ({
     transform: "rotate(180deg)",
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: "red",
   },
 }));
 
-export default function Post(props) {
+function Post(props) {
   const classes = useStyles();
-  const time = new Date();
+  const { user } = useContext(UserCxt);
+  const [isLiked, setIsLiked] = useState(false);
+  const [pUserName, setPUserName] = useState("N/A");
+  const id = props.postid;
+  let likes = [];
+  likes = JSON.parse(props.likes);
+  const posttime = new Date(props.time);
+  let time = `${posttime.toDateString()},
+  ${posttime.toLocaleTimeString()},`;
+  const [comments, setComments] = useState(JSON.parse(props.comments));
+
+  useEffect(() => {
+    if (likes.length !== 0 || likes.length !== 1) {
+      const value = likes.find((id) => id === user.user._id);
+      if (value) {
+        setIsLiked(true);
+      } else {
+        setIsLiked(false);
+      }
+    }
+    getAUser(props.username, user.token)
+      .then((response) => {
+        setPUserName(response.name);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+  function addPostLike(e) {
+    e.preventDefault();
+    addLikes(id, user.token)
+      .then((res) => {
+        setIsLiked(true);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
+  const [comment, setComment] = useState("");
+  function handleInputComment(e) {
+    e.preventDefault();
+    setComment(e.target.value);
+  }
+
+  function handlePostComments(e) {
+    e.preventDefault();
+    addComments(id, user.token, comment)
+      .then((res) => {
+        if (res) {
+          setComment("");
+          setComments(res.comments);
+        }
+      })
+      .catch((er) => console.log(er));
+  }
+
   return (
-    <Grid sm="12" lg="12" className={classes.root}>
-      <Card>
+    <Box key={props.key} marginY={2} marginX={5}>
+      <Card classes={classes.root}>
+        {props.image && (
+          <CardMedia
+            component="img"
+            classes={classes.media}
+            width="100%"
+            height="300px"
+            src={props.image}
+          />
+        )}
         <CardHeader
           avatar={
-            <Avatar alt="User" className={classes.avatar}>
-              {props.avatar || " R"}
+            <Avatar style={{ backgroundColor: "purple" }}>
+              {pUserName.slice(0, 1).toUpperCase()}
             </Avatar>
           }
-          action={
-            <IconButton aria-label="settings">
-              <MoreVertOutlined />
-            </IconButton>
-          }
-          title={
-            <Typography variant="h6" component="h6">
-              @{props.username || "NewUser"}
-            </Typography>
-          }
-          subheader={props.postTime || time.toUTCString().slice(0, 16)}
-        />
-        <CardMedia
-          className={classes.media}
-          image={props.image || "https://picsum.photos/400/300"}
-          title="post img"
+          title={pUserName.toUpperCase()}
+          subheader={time}
         />
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            This impressive paella is a perfect party dish and a fun meal to
-            cook together with your guests.
-          </Typography>
+          <Typography>{props.content}</Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteBorderOutlined />
+        <CardActions>
+          <IconButton onClick={addPostLike}>
+            {isLiked ? (
+              <i className="ri-heart-3-fill" style={{ color: "purple" }}></i>
+            ) : (
+              <i className="ri-heart-3-line"></i>
+            )}
           </IconButton>
-          <IconButton aria-label="share">
-            <CommentOutlined />
-          </IconButton>
-          <IconButton className={classes.expand} aria-label="Tag">
-            <ShareOutlined />
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <i className="ri-chat-3-line"></i>
           </IconButton>
         </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <Divider variant="middle" component="hr" />
+          <Box m={1}>
+            <AddComments
+              onchange={handleInputComment}
+              onsubmit={handlePostComments}
+              value={comment}
+            />
+            <Box marginX={1} marginY={1}>
+              <List>
+                {comments &&
+                  comments.map((comment) => {
+                    return (
+                      <PostComments
+                        username={comment.id}
+                        comment={comment.title}
+                      />
+                    );
+                  })}
+              </List>
+            </Box>
+          </Box>
+        </Collapse>
       </Card>
+    </Box>
+  );
+}
+
+export default Post;
+
+function AddComments(props) {
+  return (
+    <Grid container direction="row" justify="center" alignItems="center">
+      <form onSubmit={props.onsubmit}>
+        <TextField
+          type="text"
+          required={true}
+          variant="standard"
+          color="secondary"
+          multiline={true}
+          rowsMax={5}
+          placeholder="Write a comment."
+          onChange={props.onchange}
+          value={props.value}
+        />
+        <Button type="submit" variant="outlined" size="small" color="primary">
+          Add
+        </Button>
+      </form>
     </Grid>
   );
 }
