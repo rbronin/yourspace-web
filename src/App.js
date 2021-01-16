@@ -21,7 +21,7 @@ function App() {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/about" component={About} />
+            <Route exact path="/about" component={SearchUser} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
             <PrivateRoute exact path="/feed">
@@ -30,7 +30,8 @@ function App() {
             <PrivateRoute exact path="/user/profile">
               <UserProfile />
             </PrivateRoute>
-            <PrivateRoute exact path="/search">
+            {/* <Route exact path="/search/user" component={SearchUser} /> */}
+            <PrivateRoute exact path="/search/user">
               <SearchUser />
             </PrivateRoute>
           </Switch>

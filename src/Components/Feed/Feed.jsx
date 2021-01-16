@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import AppBar from "@material-ui/core/AppBar";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Toolbar,
   IconButton,
@@ -17,6 +18,7 @@ import UserCard from "../User/UserCard";
 import { RouteLink } from "../../Config/HelperComponents";
 import { UserCxt } from "../../Config/UserContext";
 import { getUserFeed, getUserList } from "../../Config/server";
+import { useHistory } from "react-router-dom";
 
 function Feed() {
   return (
@@ -52,7 +54,22 @@ function Feed() {
 
 export default Feed;
 
+const createStyle = makeStyles({
+  avatar: {
+    backgroundColor: "#fefefe",
+    color: "blue",
+  },
+});
+
 function MyAppBar() {
+  const classes = createStyle();
+  const { user } = useContext(UserCxt);
+  const avatar = user.user.name.slice(0, 1).toUpperCase();
+  const history = useHistory();
+  function handelClick(e) {
+    e.preventDefault();
+    history.push("/search/user");
+  }
   return (
     <AppBar position="static" variant="elevation" color="primary">
       <Toolbar>
@@ -68,22 +85,17 @@ function MyAppBar() {
             </IconButton>
             <RouteLink
               to="/"
-              children={<Typography variant="h4">mysatck</Typography>}
+              children={<h5 style={{ color: "grey" }}>mysatck</h5>}
             />
           </Box>
           <Box display="flex" flexDirection="row">
-            <IconButton>
+            <IconButton onClick={handelClick}>
               <i class="ri-search-2-line"></i>
             </IconButton>
             <Box marginX={2} />
             <RouteLink
               to="/user/profile"
-              children={
-                <Avatar
-                  src="https://picsum.photos/200/300?grayscale&random=1"
-                  alt="user-avatar"
-                />
-              }
+              children={<Avatar className={classes.avatar}>{avatar}</Avatar>}
             />
           </Box>
         </Grid>

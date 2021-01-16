@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -10,15 +10,17 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Container, Paper } from "@material-ui/core";
 import PostLists from "../Post/PostLists";
 import { UserCxt } from "../../Config/UserContext";
-import { getAllUserPost } from "../../Config/server";
-import { RouteLink } from "../../Config/HelperComponents";
+// import { getAllUserPost } from "../../Config/server";
+// import { RouteLink } from "../../Config/HelperComponents";
 
 function UserProfile() {
-  const { user, setUser } = React.useContext(UserCxt);
+  const { user, setUser } = useContext(UserCxt);
 
-  // React.useEffect(() => {
+  function addFriends(e) {
+    e.preventDefault();
+    //Todo: add methods
+  }
 
-  // }, [])
   return (
     <Grid container direction="column" justify="center" alignItems="center">
       <Grid item xs={12} lg={6}>
@@ -41,7 +43,7 @@ function UserProfile() {
           </Typography>
           <Box marginY={2}>
             <Box>
-              <RouteLink
+              {/* <RouteLink
                 to="/set/profile"
                 children={
                   <Button variant="text" color="primary">
@@ -50,10 +52,15 @@ function UserProfile() {
                     </span>
                   </Button>
                 }
-              />
+              /> */}
             </Box>
           </Box>
-          <Button variant="outlined" size="large" color="primary">
+          <Button
+            onClick={addFriends}
+            variant="outlined"
+            size="large"
+            color="primary"
+          >
             Follow
           </Button>
         </Box>
@@ -109,18 +116,20 @@ function UserInfo(props) {
   return (
     <Container maxWidth="lg">
       <Paper elevation={1} className={classes.root}>
-        <Tabs
-          value={value}
-          indicatorColor="primary"
-          textColor="primary"
-          onChange={handleChange}
-          aria-label="tabs"
-          centered={true}
-        >
-          <Tab label="Posts" {...a11yProps(0)} />
-          <Tab label="Friends" {...a11yProps(1)} />
-          <Tab label="Following" {...a11yProps(2)} />
-        </Tabs>
+        <Container maxWidth="md">
+          <Tabs
+            value={value}
+            indicatorColor="primary"
+            textColor="primary"
+            onChange={handleChange}
+            aria-label="tabs"
+            centered={true}
+          >
+            <Tab label="Posts" {...a11yProps(0)} />
+            <Tab label="Friends" {...a11yProps(1)} />
+            <Tab label="Collections" {...a11yProps(2)} />
+          </Tabs>
+        </Container>
       </Paper>
       {/* Tabpannels */}
       <TabPanel value={value} index={0}>
@@ -128,12 +137,12 @@ function UserInfo(props) {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Grid item xs={12} lg={12}>
-          Friends components
+          Under development
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Grid item xs={12} lg={12}>
-          Following components
+          Under development
         </Grid>
       </TabPanel>
     </Container>
@@ -142,7 +151,7 @@ function UserInfo(props) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    maxWidth: 1200,
     backgroundColor: theme.palette.background.paper,
   },
 }));

@@ -49,26 +49,6 @@ function HeadSection() {
       >
         <Grid item>
           <RouteLink
-            to="/feed"
-            children={
-              <Button variant="text" color="secondary">
-                Feed
-              </Button>
-            }
-          />
-        </Grid>
-        <Grid item>
-          <RouteLink
-            to="/user/profile"
-            children={
-              <Button variant="text" color="secondary">
-                UserProfile
-              </Button>
-            }
-          />
-        </Grid>
-        <Grid item>
-          <RouteLink
             to="/about"
             children={
               <Button variant="text" color="secondary">

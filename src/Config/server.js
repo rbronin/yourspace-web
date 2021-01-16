@@ -9,7 +9,7 @@ const server_api =
     : serverConfig.dev_server;
 
 /**
- * @string access-server-api
+ * @url access-server-api
  */
 
 const api = server_api;
@@ -126,6 +126,24 @@ function getAUser(userid, token) {
 
 /**
  *
+ * @param {string} u_name - user to search user
+ * @param {string} token - auth token
+ */
+
+function searchUserByName(u_name, token) {
+  return fetch(`${api}/user/search/name?u_name=${u_name}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .catch((err) => err);
+}
+
+/**
+ *
  * @param {string} token - auth-token
  * @required token
  */
@@ -214,6 +232,7 @@ export {
   SignUpUser,
   isLoggedIn,
   getAUser,
+  searchUserByName,
   getUserList,
   getAllUserPost,
   getUserFeed,

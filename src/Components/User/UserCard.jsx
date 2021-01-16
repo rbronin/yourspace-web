@@ -22,7 +22,7 @@ function UserCard(props) {
         <ListItemText primary={name} secondary={username} />
         <ListItemSecondaryAction>
           <IconButton edge="end" aria-label="follow">
-            <i class="ri-user-follow-line"></i>
+            <i class="ri-user-add-line"></i>
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
