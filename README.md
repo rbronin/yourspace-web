@@ -1,13 +1,15 @@
-## MYSTACK #### initially yourspace
+# Yourspace
 
-A social media app buid with react and node.js
+## A minimalist social media application
 
-### Live Preview
+## **_Live Preview_**
 
-https://yourspace.netlify.app/
+## https://yourspace.vercel.app/
 
-![Preview](/public/assets/Screenshot.png)
+![Preview](./src/assets/Screenshot.png)
 
-#### server repo
+`Build with React.js and MaterialUI`
 
-https://github.com/ravics1721/ys-server
+## **_Server repo_**
+
+## https://github.com/ravics1721/ys-server
