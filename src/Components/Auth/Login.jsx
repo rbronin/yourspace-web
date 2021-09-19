@@ -12,8 +12,8 @@ import Messages from "../Messages";
 import { useHistory } from "react-router-dom";
 
 function Login() {
-  const { user, setUser } = React.useContext(UserCxt);
-  const { isAuthenticated, setIsAuthenticated } = React.useContext(AuthCxt);
+  const { setUser } = React.useContext(UserCxt);
+  const { setIsAuthenticated } = React.useContext(AuthCxt);
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

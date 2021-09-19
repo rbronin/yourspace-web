@@ -1,8 +1,6 @@
 import React, { useState, useContext } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import { IconButton, Card, Box, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { searchUserByName } from "../../Config/server";
@@ -10,7 +8,6 @@ import { UserCxt } from "../../Config/UserContext";
 import { RouteLink } from "../../Config/HelperComponents";
 import UserCard from "./UserCard";
 import Messages from "../Messages";
-import { blue } from "@material-ui/core/colors";
 
 function SearchUser() {
   const [u_name, setU_name] = useState("");

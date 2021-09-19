@@ -14,7 +14,7 @@ import { UserCxt } from "../../Config/UserContext";
 // import { RouteLink } from "../../Config/HelperComponents";
 
 function UserProfile() {
-  const { user, setUser } = useContext(UserCxt);
+  const { user } = useContext(UserCxt);
 
   function addFriends(e) {
     e.preventDefault();

@@ -36,7 +36,7 @@ function HeadSection() {
           </Box>
         </Grid>
         <Grid item>
-          <Typography variant="h4">MYSTACK</Typography>
+          <Typography variant="h4">Yourspace</Typography>
         </Grid>
       </Grid>
       <Grid

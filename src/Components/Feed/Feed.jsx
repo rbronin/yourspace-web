@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import AppBar from "@material-ui/core/AppBar";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,8 +7,6 @@ import {
   Toolbar,
   IconButton,
   Avatar,
-  Button,
-  Paper,
   List,
 } from "@material-ui/core";
 import Post from "../Post/Post";
@@ -114,7 +111,7 @@ function PostsArea() {
         setPosts(res);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
   function _arrayBufferToBase64(buffer) {
     var binary = "";
@@ -168,7 +165,7 @@ function UserList() {
     getUserList(user.token).then((res) => {
       setUsers(res);
     });
-  }, []);
+  }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <List>

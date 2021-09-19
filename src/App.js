@@ -9,7 +9,6 @@ import UserProfile from "./Components/User/UserProfile";
 import SearchUser from "./Components/User/SearchUser";
 
 import { UserCxt, AuthCxt } from "./Config/UserContext";
-import About from "./Components/About";
 
 function App() {
   const [user, setUser] = useState({});

@@ -66,7 +66,7 @@ function Post(props) {
         setPUserName(response.name);
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
   function addPostLike(e) {
     e.preventDefault();

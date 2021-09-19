@@ -7,7 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import { getAUser } from "../../Config/server";
 import { UserCxt } from "../../Config/UserContext";
-import { Box, Paper } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 
 function PostComments(props) {
   const classes = useStyles();

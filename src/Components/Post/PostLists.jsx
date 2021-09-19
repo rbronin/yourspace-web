@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 function Post(props) {
   const classes = useStyles();
 
-  const { content, username, image, time, like, comments } = props;
+  const { content, username, image, time } = props;
   return (
     <Box marginY={2} marginRight={0.5} marginLeft={1} maxWidth={500}>
       <Card classes={classes.root}>
@@ -83,14 +83,14 @@ function Post(props) {
 export default PostLists;
 
 function PostLists() {
-  const { user, setUser } = React.useContext(UserCxt);
+  const { user } = React.useContext(UserCxt);
   const [posts, setPosts] = React.useState([]);
 
   React.useEffect(() => {
     getAllUserPost(user.user._id, user.token).then((res) => {
       return setPosts(res);
     });
-  }, []);
+  }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
   function _arrayBufferToBase64(buffer) {
     var binary = "";
