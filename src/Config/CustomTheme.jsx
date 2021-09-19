@@ -5,14 +5,14 @@ import { ThemeProvider } from "@material-ui/styles";
 const theme = createMuiTheme({
   palette: {
     primary: {
+      main: "#536DFE",
+      light: "#758afe",
+      dark: "#3a4cb1",
+    },
+    secondary: {
       main: "#11cb5f",
       light: "#40d57f",
       dark: "#0b8e42",
-    },
-    secondary: {
-      main: "#4d148c",
-      light: "#7043a3",
-      dark: "#350e62",
     },
     error: {
       light: "#FF8A65",
@@ -35,7 +35,6 @@ const theme = createMuiTheme({
       dark: "#186A3B",
     },
   },
-
 });
 
 /**

@@ -1,9 +1,9 @@
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import About from '../pages/About';
-import Home from '../pages/Home';
-import Login from '../pages/Auth/Login';
-import Signup from '../pages/Auth/SignUp';
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import About from "../pages/common/About";
+import Home from "../pages/common/Home";
+import Login from "../pages/Auth/Login";
+import Signup from "../pages/Auth/SignUp";
 
 const Routes = () => {
   return (
