@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import exploreImg from "../../assets/explore.svg";
 import { useStyles } from "./styles/index.css";
 import { useHistory } from "react-router-dom";
+import { Footer } from "../../Components/utils";
 
 function HeadSection() {
   const styles = useStyles();
@@ -98,33 +99,12 @@ function MainSection() {
   );
 }
 
-function FooterSection() {
-  const date = new Date();
-  return (
-    <Grid container direction='row' justify='center' alignItems='flex-end'>
-      <Grid item>
-        <Typography variant='caption' component='p'>
-          &copy; {date.getFullYear()} by Ravi Bhart
-          <a
-            href='https://github.com/ravics1721'
-            target='_blank'
-            rel='noopener noreferrer'
-            style={{ textDecoration: "none", marginLeft: 5 }}
-          >
-            <i className='ri-link'></i>
-          </a>
-        </Typography>
-      </Grid>
-    </Grid>
-  );
-}
-
 const Home = () => {
   return (
     <Box marginTop={2} marginX={15}>
       <HeadSection />
       <MainSection />
-      <FooterSection />
+      <Footer />
     </Box>
   );
 };

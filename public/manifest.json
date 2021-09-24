@@ -1,19 +1,19 @@
 {
-  "short_name": "Mystack",
-  "name": "Mystack - social app",
+  "short_name": "YS",
+  "name": "Yourspace",
   "icons": [
     {
-      "src": "stack36.ico",
+      "src": "spaceship.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "stack36x.png",
+      "src": "spaceship120.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "120x120"
     },
     {
-      "src": "stack35x.png",
+      "src": "spaceship.png",
       "type": "image/png",
       "sizes": "512x512"
     }
