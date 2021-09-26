@@ -36,7 +36,12 @@ const Post = ({ post }) => {
       <Box>
         <p className={styles.content}>{post?.content}</p>
       </Box>
-      <Box display='flex' flexDirection='row' justifyContent='space-between'>
+      <Box
+        className={styles.actions}
+        display='flex'
+        flexDirection='row'
+        justifyContent='space-between'
+      >
         <IconButton onClick={addLikes}>
           <i className='ri-heart-3-line'></i>
         </IconButton>

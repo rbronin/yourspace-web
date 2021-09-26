@@ -92,7 +92,7 @@ function MainSection() {
       </Grid>
       <Grid item xs={12} sm={6} lg={6} xl={6}>
         <div className={styles.imgContainer}>
-          <img height={300} src={exploreImg} alt='banner' />
+          <img loading='lazy' height={300} src={exploreImg} alt='banner' />
         </div>
       </Grid>
     </Grid>

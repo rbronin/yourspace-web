@@ -2,8 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(0, 1),
-    border: `1px solid ${theme.palette.grey[400]}`,
+    border: `1px solid ${theme.palette.grey[300]}`,
     // boxShadow: theme.shadows[1],
     borderRadius: 10,
     padding: theme.spacing(1, 2),
@@ -42,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
   img: {
     maxHeight: 400,
     maxWidth: "fit-parent",
+  },
+  actions: {
+    borderTop: `1px solid ${theme.palette.grey[200]}`,
   },
 }));
 
