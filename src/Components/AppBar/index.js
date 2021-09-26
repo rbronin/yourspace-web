@@ -24,11 +24,21 @@ export default function AppBar() {
           justify='space-between'
           alignItems='center'
         >
-          <Box display='flex' flexDirection='row' justifyContent='start'>
+          <Box
+            display='flex'
+            flexDirection='row'
+            justifyContent='start'
+            alignItems='center'
+          >
             <IconButton>
               <i className={`ri-space-ship-line ${classes.logo}`}></i>
             </IconButton>
-            <TextField type='text' variant='outlined' />
+            <TextField
+              size='small'
+              type='text'
+              variant='outlined'
+              placeholder='Seacrh by name...'
+            />
           </Box>
           <Box display='flex' flexDirection='row'>
             <IconButton onClick={handelClick}>
