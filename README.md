@@ -1,6 +1,6 @@
-# Yourspace
+# Codespace
 
-## A minimalist social media application
+## A minimalist social media for code's stories
 
 ## **_Live Preview_**
 

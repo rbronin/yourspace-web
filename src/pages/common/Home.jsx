@@ -12,7 +12,7 @@ function HeadSection() {
   const styles = useStyles();
   const history = useHistory();
   const goToLogin = () => {
-    history.push("/login");
+    history.push("/signin");
   };
   const goToAbout = () => {
     history.push("/about");
@@ -27,7 +27,7 @@ function HeadSection() {
           <i className='ri-space-ship-line ri-3x'></i>
         </Grid>
         <Grid item>
-          <h2 className={styles.logo}>Yourspace</h2>
+          <h2 className={styles.logo}>Codespace</h2>
         </Grid>
       </Grid>
       <Grid
@@ -92,7 +92,7 @@ function MainSection() {
       </Grid>
       <Grid item xs={12} sm={6} lg={6} xl={6}>
         <div className={styles.imgContainer}>
-          <img height={300} src={exploreImg} alt='banner' />
+          <img loading='lazy' height={300} src={exploreImg} alt='banner' />
         </div>
       </Grid>
     </Grid>
