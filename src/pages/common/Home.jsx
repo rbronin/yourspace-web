@@ -12,7 +12,7 @@ function HeadSection() {
   const styles = useStyles();
   const history = useHistory();
   const goToLogin = () => {
-    history.push("/login");
+    history.push("/signin");
   };
   const goToAbout = () => {
     history.push("/about");
