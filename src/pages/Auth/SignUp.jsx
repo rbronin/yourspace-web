@@ -19,7 +19,7 @@ function Signup() {
         alignItems='center'
       >
         <div className={styles.form}>
-          <h1>Signup to codawn</h1>
+          <h2>Signup to codespace</h2>
           <div className={styles.buttonDiv}>
             <Button
               className={styles.button}
