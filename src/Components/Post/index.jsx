@@ -2,14 +2,14 @@ import { Avatar, Box, IconButton } from "@material-ui/core";
 import React from "react";
 import useStyles from "./style/index.css";
 
-const Post = ({ post }) => {
+const Post = ({ post = {} }) => {
   const styles = useStyles();
 
   const addLikes = () => {};
   const showComments = () => {};
   const addToCollection = () => {};
 
-  let avatar = "N";
+  let avatar = post.author?.slice(0, 1)?.toUpperCase() || "N";
 
   return (
     <div className={styles.root}>
