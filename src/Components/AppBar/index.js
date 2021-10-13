@@ -1,19 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { AppBar as MuiAppBar, TextField } from "@material-ui/core";
 import { Toolbar, IconButton, Avatar } from "@material-ui/core";
+import { Menu, MenuItem, Fade } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import useStyles from "./style/index.css";
 
 export default function AppBar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [anchorEL, setAnchorEL] = useState(null);
   const classes = useStyles();
   const avatar = "A";
   const history = useHistory();
-  function handelClick(e) {
-    e.preventDefault();
-    history.push("/user");
-  }
+
+  const openMenu = () => {
+    setIsOpen(!isOpen);
+  };
+  const closeMenu = () => {
+    setIsOpen(!isOpen);
+    setAnchorEL(null);
+  };
+  const handleClick = (e) => {
+    setAnchorEL(e.currentTarget);
+    openMenu();
+  };
+
+  const profileRoute = () => {
+    history.push("/profile");
+  };
+  const accountRoute = () => {
+    history.push("/account");
+  };
+  const logout = () => {};
+
   return (
     <MuiAppBar position='static' variant='elevation' elevation={1} color='default'>
       <Toolbar>
@@ -41,11 +61,22 @@ export default function AppBar() {
             />
           </Box>
           <Box display='flex' flexDirection='row'>
-            <IconButton onClick={handelClick}>
-              <i className='ri-home-smile-line'></i>
-            </IconButton>
             <Box marginX={2} />
-            <Avatar className={classes.avatar}>{avatar || "A"}</Avatar>
+            <Avatar className={classes.avatar} component='button' onClick={handleClick}>
+              {avatar || "A"}
+            </Avatar>
+            <Menu
+              id='fade-menu'
+              anchorEl={anchorEL}
+              keepMounted
+              onClose={closeMenu}
+              open={isOpen}
+              TransitionComponent={Fade}
+            >
+              <MenuItem onClick={profileRoute}>Profile</MenuItem>
+              <MenuItem onClick={accountRoute}>Account</MenuItem>
+              <MenuItem onClick={logout}>Logout</MenuItem>
+            </Menu>
           </Box>
         </Grid>
       </Toolbar>
