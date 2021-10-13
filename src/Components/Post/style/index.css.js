@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
     // boxShadow: theme.shadows[1],
     borderRadius: 10,
     padding: theme.spacing(1, 2),
+    margin: theme.spacing(0, 0, 2),
   },
   avatar: {
     backgroundColor: "#fefefe",
