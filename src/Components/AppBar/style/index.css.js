@@ -4,6 +4,8 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: "#fefefe",
     color: theme.palette.primary.main,
+    border: "none",
+    cursor: "pointer",
   },
   root: {
     margin: theme.spacing(0, 10),
