@@ -1,12 +1,19 @@
 import { login, signup } from "./index"; //actions
 import { auth } from "../../apis"; //auth api
 
+export const clearLogin = () => {
+  return {
+    type: login.CLEAR_LOGIN,
+  };
+};
+
 export const loginToGithub = (payload) => {
   return (dispatch) => {
     dispatch(loginToGithubStart());
     auth
-      .login(payload)
+      .login()
       .then((response) => {
+        console.log({ response });
         loginToGithubSuccess(response.data);
       })
       .catch((err) => {
