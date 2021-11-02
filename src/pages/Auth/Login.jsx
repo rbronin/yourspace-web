@@ -1,27 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
-import { Button } from "@material-ui/core";
+import { Button, FormControl, TextField, Link, Typography } from "@material-ui/core";
+// import { Alert } from "@material-ui/lab";
 import useStyles from "./style/login.css";
-import { Link } from "react-router-dom";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
 import { loginToGithub, clearLogin } from "../../store/actions/auth";
 
-const GithubIcon = <i className='ri-github-fill ri-2x'></i>;
-const GitlabIcon = <i className='ri-gitlab-line ri-2x'></i>;
-
-const githubUri =
-  "https://github.com/login/oauth/authorize?client_id=a3625c42cc89b833e708";
-
-function Login({ githubLogin, clearLogin, githubLoginData }) {
+function Login({ githubLogin, clearLogin, loginData }) {
   const styles = useStyles();
 
-  // eslint-disable-next-line no-unused-vars
-  const handleGithubLogin = () => {
-    githubLogin();
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const getValue = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setUser({
+      ...user,
+      [name]: value,
+    });
   };
 
-  console.log({ githubLoginData });
+  const handleLogin = (e) => {
+    e.preventDefault();
+    console.log(e.target);
+  };
 
   return (
     <div className={styles.root}>
@@ -34,35 +40,48 @@ function Login({ githubLogin, clearLogin, githubLoginData }) {
       >
         <div className={styles.form}>
           <h2>Login to codespace</h2>
-          <div className={styles.buttonDiv}>
-            <a href='http://localhost:4000/api/auth/github'>
-              <Button
-                className={styles.button}
+          {/* <Alert severity='error'>This is error message</Alert> */}
+          <form onSubmit={handleLogin}>
+            <FormControl margin='dense' fullWidth>
+              <TextField
+                type='email'
+                name='email'
                 variant='outlined'
-                color='default'
-                // fullWidth
-                startIcon={GithubIcon}
-                // onClick={() => handleGithubLogin()}
-              >
-                Signin With Github
+                size='small'
+                placeholder='Email'
+                fullWidth
+                required={true}
+                onChange={getValue}
+              />
+            </FormControl>
+            <FormControl margin='dense' fullWidth>
+              <TextField
+                type='password'
+                name='password'
+                variant='outlined'
+                size='small'
+                placeholder='Password'
+                fullWidth
+                required={true}
+                onChange={getValue}
+              />
+            </FormControl>
+            <FormControl margin='dense' fullWidth>
+              <Button type='submit' variant='contained' color='primary'>
+                Signin
               </Button>
-            </a>
-          </div>
-          <p className={styles.divider}>Comming soon...</p>
-          <div className={styles.buttonDiv}>
-            <Button
-              className={styles.button}
-              variant='outlined'
-              color='default'
-              // fullWidth
-              startIcon={GitlabIcon}
-            >
-              Signin with Gitlab
-            </Button>
-          </div>
-          <Link to='/signup' className={styles.link}>
-            Or Signup
-          </Link>
+            </FormControl>
+            <FormControl margin='dense' fullWidth>
+              <Typography align='center' variant='body1'>
+                Doesn't have an account?
+              </Typography>
+            </FormControl>
+            <FormControl margin='dense' fullWidth>
+              <Link href='/signup' style={{ textAlign: "center" }}>
+                Signup
+              </Link>
+            </FormControl>
+          </form>
         </div>
       </Grid>
     </div>
@@ -72,14 +91,14 @@ function Login({ githubLogin, clearLogin, githubLoginData }) {
 const mapStateToProps = (state, ownProps) => {
   return {
     ...ownProps,
-    githubLoginData: state.AuthReducer,
+    loginData: state.AuthReducer,
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     ...ownProps,
-    githubLogin: () => {
+    login: () => {
       dispatch(loginToGithub());
     },
     clearLogin: () => {

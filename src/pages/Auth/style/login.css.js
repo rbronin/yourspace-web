@@ -5,22 +5,28 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
   },
   form: {
+    background: theme.palette.common.white,
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
+    boxSizing: "border-box",
     borderRadius: 10,
-    padding: theme.spacing(3, 1),
+    padding: theme.spacing(3, 4),
     width: 450,
-    boxShadow: theme.shadows[2],
+    boxShadow: theme.shadows[1],
     [theme.breakpoints.down("lg")]: {
       width: 400,
+      padding: theme.spacing(3, 3),
     },
     [theme.breakpoints.down("sm")]: {
       width: "70%",
+      padding: theme.spacing(3, 2),
     },
     [theme.breakpoints.down("xs")]: {
       width: "90%",
+      padding: theme.spacing(3, 1),
+      boxShadow: theme.shadows[0],
     },
   },
   buttonDiv: {
