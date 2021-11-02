@@ -1,38 +1,43 @@
-import { login, signup } from "./index"; //actions
-import { auth } from "../../apis"; //auth api
+import { login, signup } from "../index"; //actions
+import { auth } from "../../../apis"; //auth api
 
 export const clearLogin = () => {
   return {
     type: login.CLEAR_LOGIN,
   };
 };
+export const clearSignup = () => {
+  return {
+    type: signup.CLEAR_SIGNUP,
+  };
+};
 
-export const loginToGithub = (payload) => {
+export const emailLogin = (payload) => {
   return (dispatch) => {
-    dispatch(loginToGithubStart());
+    dispatch(loginStart());
     auth
-      .login()
+      .login(payload)
       .then((response) => {
         console.log({ response });
-        loginToGithubSuccess(response.data);
+        loginSuccess(response.data);
       })
       .catch((err) => {
-        loginToGithubFailed(err);
+        loginFailed(err);
       });
   };
 };
-const loginToGithubStart = () => {
+const loginStart = () => {
   return {
     type: login.LOGIN_START,
   };
 };
-const loginToGithubSuccess = (data) => {
+const loginSuccess = (data) => {
   return {
     type: login.LOGIN_SUCEESS,
     data: data,
   };
 };
-const loginToGithubFailed = (err) => {
+const loginFailed = (err) => {
   return {
     type: login.LOGIN_FAILD,
     data: err,
@@ -40,31 +45,31 @@ const loginToGithubFailed = (err) => {
 };
 
 //signup
-export const signupToGithub = (payload) => {
+export const emailSignup = (payload) => {
   return (dispatch) => {
-    dispatch(signupToGithubStart());
+    dispatch(signupStart());
     auth
       .signup(payload)
       .then((response) => {
-        signupToGithubSuccess(response.data);
+        signupSuccess(response.data);
       })
       .catch((err) => {
-        signupToGithubFailed(err);
+        signupFailed(err);
       });
   };
 };
-const signupToGithubStart = () => {
+const signupStart = () => {
   return {
     type: signup.SIGNUP_START,
   };
 };
-const signupToGithubSuccess = (data) => {
+const signupSuccess = (data) => {
   return {
     type: signup.SIGNUP_SUCEESS,
     data: data,
   };
 };
-const signupToGithubFailed = (err) => {
+const signupFailed = (err) => {
   return {
     type: signup.CLEAR_SIGNUP,
     data: err,

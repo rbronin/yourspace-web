@@ -1,4 +1,4 @@
-import { login as Actions } from "../actions";
+import { login as Actions } from "../../actions";
 
 const initialState = {
   isLoading: false,

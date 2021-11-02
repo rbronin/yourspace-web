@@ -1,4 +1,4 @@
-import * as actionTypes from '../../actions';
+import { signup as Actions } from "../../actions";
 
 const initialState = {
   isLoading: false,
@@ -8,11 +8,11 @@ const initialState = {
   error: null,
 };
 
-const clearAddCheckout = () => {
+const clearSignup = () => {
   return initialState;
 };
 
-const addCheckoutStart = (state) => {
+const signupStart = (state) => {
   return {
     ...state,
     isLoading: true,
@@ -22,11 +22,11 @@ const addCheckoutStart = (state) => {
   };
 };
 
-const addCheckoutSuccess = (state, action) => {
+const signupSuccess = (state, action) => {
   return { ...state, data: action.data, isDone: true, isLoading: false };
 };
 
-const addCheckoutFailure = (state, action) => {
+const signupFaild = (state, action) => {
   return {
     ...state,
     error: action.data,
@@ -38,14 +38,14 @@ const addCheckoutFailure = (state, action) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.ADD_CHECKOUT_START:
-      return addCheckoutStart(state);
-    case actionTypes.ADD_CHECKOUT_SUCCESS:
-      return addCheckoutSuccess(state, action);
-    case actionTypes.ADD_CHECKOUT_FAIL:
-      return addCheckoutFailure(state, action);
-    case actionTypes.CLEAR_ADD_CHECKOUT:
-      return clearAddCheckout();
+    case Actions.SIGNUP_START:
+      return signupStart(state);
+    case Actions.SIGNUP_SUCEESS:
+      return signupSuccess(state, action);
+    case Actions.SIGNUP_FAILD:
+      return signupFaild(state, action);
+    case Actions.CLEAR_SIGNUP:
+      return clearSignup();
     default:
       return state;
   }

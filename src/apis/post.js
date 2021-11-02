@@ -1,35 +1,35 @@
 import { axios } from "./axios";
 
 export const post = {
-  create: (payload) => {
+  create: async (payload) => {
     const { data } = payload;
-    return axios.post("/post", data);
+    return await axios.post("/post", data);
   },
-  getPosts: (payload) => {
-    return axios.get("/posts");
+  getPosts: async (payload) => {
+    return await axios.get("/posts");
   },
-  getAPost: (payload) => {
+  getAPost: async (payload) => {
     const { postid } = payload;
-    return axios.get(`/post?id=${postid}`);
+    return await axios.get(`/post?id=${postid}`);
   },
-  deletePost: (payload) => {
+  deletePost: async (payload) => {
     const { postid } = payload;
-    return axios.delete(`/post/${postid}`);
+    return await axios.delete(`/post/${postid}`);
   },
-  addLike: (payload) => {
+  addLike: async (payload) => {
     const { postid } = payload;
-    return axios.post(`/likes/${postid}`);
+    return await axios.post(`/likes/${postid}`);
   },
-  addComment: (payload) => {
+  addComment: async (payload) => {
     const { postid } = payload;
-    return axios.post(`/comments/${postid}`);
+    return await axios.post(`/comments/${postid}`);
   },
-  getLikes: (payload) => {
+  getLikes: async (payload) => {
     const { postid } = payload;
-    return axios.get(`/likes/${postid}`);
+    return await axios.get(`/likes/${postid}`);
   },
-  getComments: (payload) => {
+  getComments: async (payload) => {
     const { postid } = payload;
-    return axios.get(`/comments/${postid}`);
+    return await axios.get(`/comments/${postid}`);
   },
 };

@@ -5,9 +5,9 @@ import { Button, FormControl, TextField, Link, Typography } from "@material-ui/c
 import useStyles from "./style/login.css";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
-import { loginToGithub, clearLogin } from "../../store/actions/auth";
+import { emailLogin, clearLogin } from "../../store/actions/auth/auth";
 
-function Login({ githubLogin, clearLogin, loginData }) {
+function Login({ emailLogin, clearLogin, loginData }) {
   const styles = useStyles();
 
   const [user, setUser] = useState({
@@ -91,15 +91,15 @@ function Login({ githubLogin, clearLogin, loginData }) {
 const mapStateToProps = (state, ownProps) => {
   return {
     ...ownProps,
-    loginData: state.AuthReducer,
+    loginData: state.LoginReducer,
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     ...ownProps,
-    login: () => {
-      dispatch(loginToGithub());
+    login: (payload) => {
+      dispatch(emailLogin(payload));
     },
     clearLogin: () => {
       dispatch(clearLogin());

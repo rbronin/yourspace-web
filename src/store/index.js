@@ -1,9 +1,10 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-import AuthReducer from "./reducers/auth";
+import { SignupReducer, LoginReducer } from "./reducers";
 
 const reducers = combineReducers({
-  AuthReducer,
+  SignupReducer,
+  LoginReducer,
 });
 
 const composeEnhancers =

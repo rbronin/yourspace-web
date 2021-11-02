@@ -1,16 +1,21 @@
-import Axios from "axios";
 import { axios } from "./axios";
 
-const githubUri =
-  "https://github.com/login/oauth/authorize?client_id=a3625c42cc89b833e708";
-
 export const auth = {
-  login: async () => {
-    return await axios.get("/auth/github");
+  login: async (payload) => {
+    const { data } = payload;
+    return await axios.post("/auth/signin", data);
     // return Axios.get(githubUri);
   },
-  signup: (payload) => {
+  signup: async (payload) => {
     const { data } = payload;
-    return Axios.post("/register", data);
+    return await axios.post("/auth/signup", data);
+  },
+  verify: async (payload) => {
+    const { token } = payload;
+    return await axios.get("/auth/verify", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 };

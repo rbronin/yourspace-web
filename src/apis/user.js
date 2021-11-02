@@ -18,15 +18,23 @@ export const user = {
     return axios.delete(`/user/follow/${userid}`);
   },
   getProfile: (payload) => {
-    const { userid } = payload;
-    return axios.get(`/profile/${userid}`);
+    const { token } = payload;
+    return axios.get(`/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
   getProfileById: (payload) => {
     const { userid } = payload;
     return axios.get(`/user/profile/${userid}`);
   },
   feed: (payload) => {
-    const { userid } = payload;
-    return axios.get(`/feed/${userid}`);
+    const { token } = payload;
+    return axios.get(`/feed`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 };

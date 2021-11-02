@@ -1,5 +1,5 @@
-import { createPost } from "./index";
-import { post } from "../../apis";
+import { createPost } from "../index";
+import { post } from "../../../apis";
 
 export const createNewPost = (payload) => {
   return (dispatch) => {
