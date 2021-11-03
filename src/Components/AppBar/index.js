@@ -35,7 +35,7 @@ export default function AppBar() {
   const logout = () => {};
 
   return (
-    <MuiAppBar position='static' variant='elevation' elevation={1} color='default'>
+    <MuiAppBar position='static' variant='elevation' elevation={1} color='inherit'>
       <Toolbar>
         <Grid
           className={classes.root}
