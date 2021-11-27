@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Button, FormControl, TextField, Link, Typography } from "@material-ui/core";
-// import { Alert } from "@material-ui/lab";
+import { Alert } from "@material-ui/lab";
 import useStyles from "./style/login.css";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
 import { emailLogin, clearLogin } from "../../store/actions/auth/auth";
+import Loading from "../../Components/utils/Loading";
+import { storeToken } from "../../Config";
+import { useHistory } from "react-router";
 
-function Login({ emailLogin, clearLogin, loginData }) {
+function Login({ login, clearLogin, loginData }) {
   const styles = useStyles();
-
+  const history = useHistory();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -26,11 +29,24 @@ function Login({ emailLogin, clearLogin, loginData }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(e.target);
+    login({
+      data: user,
+    });
   };
+
+  useEffect(() => {
+    const { isDone, data } = loginData;
+    if (isDone && data !== null) {
+      storeToken(data.data.auth_token);
+      history.push("/feed", {
+        token: data.data.auth_token,
+      });
+    }
+  }, [loginData]); //eslint-disable-line
 
   return (
     <div className={styles.root}>
+      {loginData?.isLoading && <Loading />}
       <Grid
         className={styles.grid}
         container
@@ -40,7 +56,7 @@ function Login({ emailLogin, clearLogin, loginData }) {
       >
         <div className={styles.form}>
           <h2>Login to codespace</h2>
-          {/* <Alert severity='error'>This is error message</Alert> */}
+          {loginData?.isError && <Alert severity='error'>{loginData?.error}</Alert>}
           <form onSubmit={handleLogin}>
             <FormControl margin='dense' fullWidth>
               <TextField

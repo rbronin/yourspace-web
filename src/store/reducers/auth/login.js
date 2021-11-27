@@ -32,7 +32,7 @@ const loginFaild = (state, action) => {
     error: action.data,
     isLoading: false,
     isError: true,
-    isDone: false,
+    isDone: true,
   };
 };
 

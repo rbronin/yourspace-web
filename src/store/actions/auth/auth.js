@@ -18,11 +18,10 @@ export const emailLogin = (payload) => {
     auth
       .login(payload)
       .then((response) => {
-        console.log({ response });
-        loginSuccess(response.data);
+        dispatch(loginSuccess(response.data));
       })
       .catch((err) => {
-        loginFailed(err);
+        dispatch(loginFailed(err));
       });
   };
 };

@@ -4,7 +4,6 @@ export const auth = {
   login: async (payload) => {
     const { data } = payload;
     return await axios.post("/auth/signin", data);
-    // return Axios.get(githubUri);
   },
   signup: async (payload) => {
     const { data } = payload;
