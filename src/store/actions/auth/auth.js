@@ -51,10 +51,10 @@ export const emailSignup = (payload) => {
     auth
       .signup(payload)
       .then((response) => {
-        signupSuccess(response.data);
+        dispatch(signupSuccess(response.data));
       })
       .catch((err) => {
-        signupFailed(err);
+        dispatch(signupFailed(err));
       });
   };
 };

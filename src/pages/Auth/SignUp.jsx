@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Button, FormControl, TextField, Typography, Link } from "@material-ui/core";
 import { connect } from "react-redux";
-import { withCookies } from "react-cookie";
+import { emailSignup, clearSignup } from "../../store/actions/auth/auth";
 import useStyles from "./style/login.css";
-
-function Signup() {
+import { Alert } from "@material-ui/lab";
+import { useHistory } from "react-router-dom";
+import { Loading } from "../../Components";
+function Signup({ signupByEmail, signupData }) {
   const styles = useStyles();
-
+  const history = useHistory();
   const [newUser, setNewUser] = useState({
     name: "",
     username: "",
@@ -26,8 +28,21 @@ function Signup() {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    console.log(e.target[1]);
+    signupByEmail({
+      data: newUser,
+    });
   };
+
+  useEffect(() => {
+    const { data, isDone, isError } = signupData;
+    if (isDone && data !== null && isError === false) {
+      setTimeout(() => {
+        history.push("/signin", {
+          email: data?.data?.email,
+        });
+      }, 2000);
+    }
+  }, [signupData]); //eslint-disable-line
 
   return (
     <div className={styles.root}>
@@ -38,8 +53,19 @@ function Signup() {
         justify='center'
         alignItems='center'
       >
+        {signupData?.isLoading && <Loading />}
         <div className={styles.form}>
           <h2>Signup to codespace</h2>
+          {signupData?.data && (
+            <Alert severity='success' variant='filled'>
+              {signupData?.data?.message}
+            </Alert>
+          )}
+          {signupData?.isDone && !signupData?.isError && (
+            <Alert severity='warning' variant='standard'>
+              You will be redirected to login page
+            </Alert>
+          )}
           <form onSubmit={handleSignup}>
             <FormControl margin='dense' fullWidth>
               <TextField
@@ -111,13 +137,17 @@ function Signup() {
   );
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signupByEmail: (payload) => dispatch(emailSignup(payload)),
+    clearSignup: () => dispatch(clearSignup()),
+  };
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    signupData: state.signup,
+    ...ownProps,
+    signupData: state.SignupReducer,
   };
 };
-export default connect(mapDispatchToProps, mapStateToProps)(withCookies(Signup));
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
