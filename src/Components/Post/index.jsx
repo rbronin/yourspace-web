@@ -1,4 +1,4 @@
-import { Avatar, Box } from "@material-ui/core";
+import { Avatar, Box, Button } from "@material-ui/core";
 import React, { useState } from "react";
 import useStyles from "./style/index.css";
 
@@ -65,13 +65,12 @@ const Post = ({ post = {} }) => {
         </div>
       </Box>
       {comments.show && (
-        <div className={styles.commentBox}>
-          <>
+        <>
+          <AddComment />
+          <div className={styles.commentBox}>
             <Comment />
-            <Comment />
-            <Comment />
-          </>
-        </div>
+          </div>
+        </>
       )}
     </div>
   );
@@ -83,7 +82,9 @@ const Comment = ({ avatar, name, comment }) => {
   const styles = useStyles();
   return (
     <div className={styles.comment}>
-      <div className={styles.commentAvatar}>{avatar || "A"}</div>
+      <Avatar sizes='lg' className={styles.avatar}>
+        {avatar || "A"}
+      </Avatar>
       <div className={styles.commentArea}>
         <p className={styles.user}>{name || "Ravi"}</p>
         <p className={styles.userComment}>
@@ -91,5 +92,22 @@ const Comment = ({ avatar, name, comment }) => {
         </p>
       </div>
     </div>
+  );
+};
+
+const AddComment = ({ avatar }) => {
+  const styles = useStyles();
+  return (
+    <Box display='flex' flexDirection='row' alignItems='center' paddingX={1}>
+      <Avatar sizes='lg' className={styles.avatar}>
+        {avatar || "A"}
+      </Avatar>
+      <form className={styles.row}>
+        <textarea className={styles.input} required />
+        <Button type='submit' size='small' color='primary' variant='contained'>
+          Post
+        </Button>
+      </form>
+    </Box>
   );
 };
