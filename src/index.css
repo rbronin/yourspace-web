@@ -38,3 +38,7 @@ body {
   margin-left: 2rem;
   position: fixed;
 }
+.ri-22px {
+  font-size: 22px;
+  color: inherit;
+}
