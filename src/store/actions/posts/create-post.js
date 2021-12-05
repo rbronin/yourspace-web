@@ -1,6 +1,12 @@
 import { createPost } from "../index";
 import { post } from "../../../apis";
 
+export const clearCreatePost = () => {
+  return {
+    type: createPost.CLEAR_POST_CREATE,
+  };
+};
+
 export const createNewPost = (payload) => {
   return (dispatch) => {
     dispatch(createPostStart());
