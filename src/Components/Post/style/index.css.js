@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import { blue, blueGrey } from "@material-ui/core/colors";
+import { blue } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,14 +11,14 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.common.white,
   },
   avatar: {
-    backgroundColor: "#fefefe",
+    background: blue[50],
     color: theme.palette.primary.main,
     margin: theme.spacing(0, 1, 1, 0),
     fontWeight: "bold",
   },
   title: {
     fontWeight: "bold",
-    color: blueGrey[500],
+    color: theme.palette.grey[600],
     margin: theme.spacing(0),
   },
   dateText: {
@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    width: "100%",
   },
   imgContainer: {
     maxHeight: 400,
@@ -68,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
   },
   commentBox: {
     padding: theme.spacing(0.5, 1),
+    borderTop: `1px solid ${theme.palette.grey[200]}`,
   },
   comment: {
     display: "flex",
@@ -114,6 +116,23 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0, 0.8, 0, 0),
     fontWeight: 700,
     fontSize: 17,
+  },
+  input: {
+    borderRadius: 5,
+    width: "100%",
+    height: 40,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    padding: theme.spacing(1),
+    color: theme.palette.grey[600],
+    boxSizing: "border-box",
+    fontWeight: 500,
+    fontSize: 17,
+    cursor: "pointer",
+    outline: `1px solid ${theme.palette.grey[300]}`,
+    margin: theme.spacing(0, 1, 0, 0),
   },
 }));
 
