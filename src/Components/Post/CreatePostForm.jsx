@@ -1,13 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Button, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { clearCreatePost, createNewPost } from "../../store/actions/posts/create-post";
+import { withCookies } from "react-cookie";
+import { connect } from "react-redux";
+import { Alert } from "@material-ui/lab";
 
-const CreatePostForm = ({ user = {}, onClose = () => {} }) => {
+const CreatePostForm = ({
+  user = {},
+  onClose = () => {},
+  createPost,
+  clearCreatePost,
+  createPostData,
+}) => {
   const [post, setPost] = useState({
     content: "",
     picture: new FormData(),
   });
   const classes = useStyles(post);
+
+  useEffect(() => {
+    clearCreatePost();
+  }, []); //eslint-disable-line
 
   const handleInput = (e) => {
     let value = e.target.value;
@@ -35,11 +49,25 @@ const CreatePostForm = ({ user = {}, onClose = () => {} }) => {
 
   const handlePostData = (e) => {
     e.preventDefault();
-    console.log({ data: post.content, file: post.picture.get("picture") });
+    clearCreatePost();
+    createPost(post);
+    // console.log({ data: post.content, file: post.picture.get("picture") });
   };
+
+  console.log({ createPostData });
 
   return (
     <div className={classes.root}>
+      {createPostData.isDone && createPostData.isError && (
+        <Alert severity='error' variant='standard'>
+          {createPostData?.error?.message}
+        </Alert>
+      )}
+      {createPostData.isDone && createPostData.data && (
+        <Alert severity='success' variant='standard'>
+          {createPostData?.data?.message}
+        </Alert>
+      )}
       <div className={classes.row}>
         <h2 className={classes.heading}>Create New post</h2>
         <IconButton onClick={onClose} color='default'>
@@ -112,7 +140,29 @@ const CreatePostForm = ({ user = {}, onClose = () => {} }) => {
   );
 };
 
-export default CreatePostForm;
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    ...ownProps,
+    createPost: (payload) => {
+      dispatch(createNewPost(payload));
+    },
+    createNewPost: () => {
+      dispatch(clearCreatePost());
+    },
+    clearCreatePost: () => {
+      dispatch(clearCreatePost());
+    },
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    ...ownProps,
+    createPostData: state.CreatePostReducer,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withCookies(CreatePostForm));
 
 const useStyles = makeStyles((theme) => ({
   root: {
