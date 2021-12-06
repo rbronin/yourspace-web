@@ -10,6 +10,7 @@ body {
   /* font-family: "Poppins", sans-serif; */
   background-color: #f9f9f9;
   background-color: #eaeff9;
+  background-color: #f7f8fc;
   /* color: #008fa9; */
   /* color: #49ada0; */
   color: #353535;
@@ -36,4 +37,8 @@ body {
   width: 20rem;
   margin-left: 2rem;
   position: fixed;
+}
+.ri-22px {
+  font-size: 22px;
+  color: inherit;
 }

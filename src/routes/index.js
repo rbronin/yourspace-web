@@ -6,6 +6,8 @@ import Login from "../pages/Auth/Login";
 import Signup from "../pages/Auth/SignUp";
 import Feeds from "../pages/feed";
 import $NotFound from "../pages/Error";
+import Profile from "../pages/profile";
+import Search from "../pages/search";
 
 const Routes = () => {
   return (
@@ -16,6 +18,8 @@ const Routes = () => {
         <Route exact path='/signin' component={Login} />
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/feed' component={Feeds} />
+        <Route exact path='/profile' component={Profile} />
+        <Route exact path='/search' component={Search} />
         <Route path='/*' component={$NotFound} />
       </Switch>
     </BrowserRouter>

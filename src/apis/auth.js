@@ -1,12 +1,20 @@
 import { axios } from "./axios";
 
 export const auth = {
-  login: (payload) => {
+  login: async (payload) => {
     const { data } = payload;
-    return axios.post("/login", data);
+    return await axios.post("/auth/signin", data);
   },
-  signup: (payload) => {
+  signup: async (payload) => {
     const { data } = payload;
-    return axios.post("/register", data);
+    return await axios.post("/auth/signup", data);
+  },
+  verify: async (payload) => {
+    const { token } = payload;
+    return await axios.get("/auth/verify", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 };

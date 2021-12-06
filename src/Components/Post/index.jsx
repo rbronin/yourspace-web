@@ -1,15 +1,23 @@
-import { Avatar, Box, IconButton } from "@material-ui/core";
-import React from "react";
+import { Avatar, Box, Button } from "@material-ui/core";
+import React, { useState } from "react";
 import useStyles from "./style/index.css";
 
-const Post = ({ post }) => {
+const Post = ({ post = {} }) => {
   const styles = useStyles();
-
+  const [comments, setComments] = useState({
+    show: false,
+    lists: [],
+  });
   const addLikes = () => {};
-  const showComments = () => {};
+  const showComments = () => {
+    setComments({
+      ...comments,
+      show: !comments.show,
+    });
+  };
   const addToCollection = () => {};
 
-  let avatar = "N";
+  let avatar = post.author?.slice(0, 1)?.toUpperCase() || "N";
 
   return (
     <div className={styles.root}>
@@ -41,19 +49,65 @@ const Post = ({ post }) => {
         display='flex'
         flexDirection='row'
         justifyContent='space-between'
+        alignItems='center'
       >
-        <IconButton onClick={addLikes}>
-          <i className='ri-heart-3-line'></i>
-        </IconButton>
-        <IconButton onClick={showComments}>
-          <i className='ri-chat-smile-2-line'></i>
-        </IconButton>
-        <IconButton onClick={addToCollection}>
-          <i className='ri-bookmark-line'></i>
-        </IconButton>
+        <div onClick={addLikes} className={styles.iconButton}>
+          <i className='ri-heart-3-line ri-22px'></i>
+          <p className={styles.buttonText}>Like</p>
+        </div>
+        <div className={styles.iconButton} onClick={showComments}>
+          <i className='ri-chat-smile-2-line ri-22px'></i>
+          <p className={styles.buttonText}>Comment</p>
+        </div>
+        <div className={styles.iconButton} onClick={addToCollection}>
+          <i className='ri-bookmark-line ri-22px'></i>
+          <p className={styles.buttonText}>Save</p>
+        </div>
       </Box>
+      {comments.show && (
+        <>
+          <AddComment />
+          <div className={styles.commentBox}>
+            <Comment />
+          </div>
+        </>
+      )}
     </div>
   );
 };
 
 export default Post;
+
+const Comment = ({ avatar, name, comment }) => {
+  const styles = useStyles();
+  return (
+    <div className={styles.comment}>
+      <Avatar sizes='lg' className={styles.avatar}>
+        {avatar || "A"}
+      </Avatar>
+      <div className={styles.commentArea}>
+        <p className={styles.user}>{name || "Ravi"}</p>
+        <p className={styles.userComment}>
+          {comment || "Lorem ipsum, dolor sit amet consectetur adipisicing elit."}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const AddComment = ({ avatar }) => {
+  const styles = useStyles();
+  return (
+    <Box display='flex' flexDirection='row' alignItems='center' paddingX={1}>
+      <Avatar sizes='lg' className={styles.avatar}>
+        {avatar || "A"}
+      </Avatar>
+      <form className={styles.row}>
+        <textarea className={styles.input} required />
+        <Button type='submit' size='small' color='primary' variant='contained'>
+          Post
+        </Button>
+      </form>
+    </Box>
+  );
+};

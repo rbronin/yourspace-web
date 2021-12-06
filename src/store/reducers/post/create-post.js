@@ -1,4 +1,4 @@
-import * as actionTypes from '../../actions';
+import { createPost as Actions } from "../../actions";
 
 const initialState = {
   isLoading: false,
@@ -8,11 +8,11 @@ const initialState = {
   error: null,
 };
 
-const clearAddCheckout = () => {
+const clearCreatePost = () => {
   return initialState;
 };
 
-const addCheckoutStart = (state) => {
+const createPostStart = (state) => {
   return {
     ...state,
     isLoading: true,
@@ -22,30 +22,30 @@ const addCheckoutStart = (state) => {
   };
 };
 
-const addCheckoutSuccess = (state, action) => {
+const createPostSuccess = (state, action) => {
   return { ...state, data: action.data, isDone: true, isLoading: false };
 };
 
-const addCheckoutFailure = (state, action) => {
+const createPostFaild = (state, action) => {
   return {
     ...state,
     error: action.data,
     isLoading: false,
     isError: true,
-    isDone: false,
+    isDone: true,
   };
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.ADD_CHECKOUT_START:
-      return addCheckoutStart(state);
-    case actionTypes.ADD_CHECKOUT_SUCCESS:
-      return addCheckoutSuccess(state, action);
-    case actionTypes.ADD_CHECKOUT_FAIL:
-      return addCheckoutFailure(state, action);
-    case actionTypes.CLEAR_ADD_CHECKOUT:
-      return clearAddCheckout();
+    case Actions.POST_CREATE_START:
+      return createPostStart(state);
+    case Actions.POST_CREATE_SUCEESS:
+      return createPostSuccess(state, action);
+    case Actions.POST_CREATE_FAILD:
+      return createPostFaild(state, action);
+    case Actions.CLEAR_POST_CREATE:
+      return clearCreatePost();
     default:
       return state;
   }

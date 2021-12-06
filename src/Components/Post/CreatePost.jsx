@@ -1,20 +1,9 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
 import { Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-function CreatePost() {
+function CreatePost({ onClick }) {
   const classes = useStyles();
-  const [post, setPosts] = React.useState({
-    formData: new FormData(),
-    loading: false,
-  });
-  const { formData } = post;
-  const handleInput = (name) => (e) => {
-    const value = name === "photo" ? e.target.files[0] : e.target.value;
-    formData.set(name, value);
-    setPosts({ ...post, [name]: value });
-  };
 
   return (
     <>
@@ -23,19 +12,9 @@ function CreatePost() {
           <Avatar className={classes.avatar} variant='circle'>
             {"A"}
           </Avatar>
-          <TextField
-            type='text'
-            required={true}
-            variant='outlined'
-            color='primary'
-            multiline={true}
-            rowsMax={5}
-            placeholder='Write a post...'
-            onChange={handleInput("title")}
-            size='small'
-            fullWidth
-            className={classes.input}
-          />
+          <div className={classes.input} onClick={onClick}>
+            Write new post...
+          </div>
         </div>
       </div>
       <div className={classes.divider}> </div>
@@ -58,11 +37,27 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
   input: {
-    borderRadius: 20,
+    borderRadius: 10,
+    width: "100%",
+    height: 40,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    padding: theme.spacing(1),
+    color: theme.palette.grey[600],
+    boxSizing: "border-box",
+    fontWeight: 500,
+    fontSize: 17,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: theme.palette.grey[200],
+    },
   },
   row: {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
   },
   divider: {
     height: 0,
