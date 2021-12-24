@@ -6,6 +6,9 @@ export const post = {
     const { data } = payload;
     return await axios.post("/post", data);
   },
+  feed: async () => {
+    return await axios.get("/post");
+  },
   getPosts: async (payload) => {
     return await axios.get("/posts");
   },
