@@ -5,6 +5,7 @@ import { AppBar as MuiAppBar, TextField } from "@material-ui/core";
 import { Toolbar, IconButton, Avatar } from "@material-ui/core";
 import { Menu, MenuItem, Fade } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { deleteToken } from "../../Config";
 import useStyles from "./style/index.css";
 
 export default function AppBar() {
@@ -32,7 +33,10 @@ export default function AppBar() {
   const accountRoute = () => {
     history.push("/account");
   };
-  const logout = () => {};
+  const logout = () => {
+    deleteToken();
+    history.push("/");
+  };
 
   return (
     <MuiAppBar position='static' variant='elevation' elevation={1} color='inherit'>

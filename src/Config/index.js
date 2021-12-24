@@ -3,7 +3,11 @@ const storeToken = (data) => {
 };
 
 const useToken = () => {
-  return localStorage.getItem("auth-token") || "";
+  return JSON.parse(localStorage.getItem("auth-token")) || "";
 };
 
-export { storeToken, useToken };
+const deleteToken = () => {
+  localStorage.removeItem("auth-token");
+};
+
+export { storeToken, useToken, deleteToken };

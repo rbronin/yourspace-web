@@ -7,8 +7,9 @@ import CreatePost from "../../Components/Post/CreatePost";
 import CreatePostForm from "../../Components/Post/CreatePostForm";
 import useStyles from "./style/feed.css";
 import { postLists } from "./data";
+import { connect } from "react-redux";
 
-const Feeds = () => {
+const Feeds = ({ createdPostData }) => {
   const styles = useStyles();
   const [openModal, setOpenModal] = useState(false);
   // eslint-disable-next-line no-unused-vars
@@ -26,7 +27,7 @@ const Feeds = () => {
     <div>
       <AppBar />
       <Dialog maxWidth='sm' fullWidth={true} open={openModal} onClose={handleModalClose}>
-        <CreatePostForm onClose={handleModalClose} />
+        <CreatePostForm closeModal={handleModalClose} />
       </Dialog>
       <section className={styles.root}>
         <Grid container>
@@ -46,4 +47,11 @@ const Feeds = () => {
   );
 };
 
-export default Feeds;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    ...ownProps,
+    createdPostData: state.CreatePostReducer,
+  };
+};
+
+export default connect(mapStateToProps)(Feeds);

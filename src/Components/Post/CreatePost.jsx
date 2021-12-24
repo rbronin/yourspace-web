@@ -1,6 +1,7 @@
 import React from "react";
 import { Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { blue } from "@material-ui/core/colors";
 
 function CreatePost({ onClick }) {
   const classes = useStyles();
@@ -26,18 +27,20 @@ export default CreatePost;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    borderRadius: 10,
+    borderRadius: 5,
     padding: theme.spacing(1, 2),
     border: `1px solid ${theme.palette.grey[300]}`,
+    background: theme.palette.common.white,
   },
   avatar: {
     margin: theme.spacing(0, 1, 0, 0),
     backgroundColor: "#fefefe",
     color: theme.palette.primary.main,
     fontWeight: "bold",
+    border: `1px solid ${theme.palette.grey[300]}`,
   },
   input: {
-    borderRadius: 10,
+    borderRadius: 5,
     width: "100%",
     height: 40,
     border: `1px solid ${theme.palette.grey[300]}`,
@@ -51,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 17,
     cursor: "pointer",
     "&:hover": {
-      backgroundColor: theme.palette.grey[200],
+      backgroundColor: blue[50],
     },
   },
   row: {
