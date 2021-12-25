@@ -1,5 +1,5 @@
 import { getFeed as ACTIONS } from "../index";
-import { post } from "../../../apis/post";
+import { user } from "../../../apis/user";
 
 export const clearFeed = () => {
   return {
@@ -10,8 +10,8 @@ export const clearFeed = () => {
 export const getFeed = (payload) => {
   return (dispatch) => {
     dispatch(getFeedStart());
-    post
-      .create(payload)
+    user
+      .feed(payload)
       .then((response) => {
         dispatch(getFeedSuccess(response.data));
       })

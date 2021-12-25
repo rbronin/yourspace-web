@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0),
   },
   dateText: {
-    fontWeight: "normal",
-    fontSize: 15,
+    fontWeight: 500,
+    fontSize: 10,
     color: theme.palette.grey[600],
     margin: theme.spacing(0, 0, 1),
   },

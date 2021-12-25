@@ -1,5 +1,6 @@
 import { Avatar, Box, Button } from "@material-ui/core";
 import React, { useState } from "react";
+import { formateDate, getAvatarChars } from "../../Config";
 import useStyles from "./style/index.css";
 
 const Post = ({ post = {} }) => {
@@ -17,7 +18,7 @@ const Post = ({ post = {} }) => {
   };
   const addToCollection = () => {};
 
-  let avatar = post.author?.slice(0, 1)?.toUpperCase() || "N";
+  let avatar = getAvatarChars(post?.userid?.name) || "N";
 
   return (
     <div className={styles.root}>
@@ -26,8 +27,8 @@ const Post = ({ post = {} }) => {
           {avatar}
         </Avatar>
         <div>
-          <h3 className={styles.title}>{post?.author}</h3>
-          <p className={styles.dateText}>{post?.createdAt}</p>
+          <h3 className={styles.title}>{post?.userid?.name}</h3>
+          <p className={styles.dateText}>{formateDate(post?.createdAt)}</p>
         </div>
       </Box>
       <Box className={styles.imgContainer}>

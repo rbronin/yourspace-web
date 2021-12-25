@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Dialog from "@material-ui/core/Dialog";
 import AppBar from "../../Components/AppBar";
@@ -8,8 +8,14 @@ import CreatePostForm from "../../Components/Post/CreatePostForm";
 import useStyles from "./style/feed.css";
 import { postLists } from "./data";
 import { connect } from "react-redux";
+import { clearFeed, getFeed } from "../../store/actions/posts/feed";
 
-const Feeds = ({ createdPostData }) => {
+const Feeds = ({ createdPostData, getFeed, clearFeed, userFeeds }) => {
+  useEffect(() => {
+    getFeed();
+    return clearFeed;
+  }, []); //eslint-disable-line
+  console.log({ userFeeds });
   const styles = useStyles();
   const [openModal, setOpenModal] = useState(false);
   // eslint-disable-next-line no-unused-vars
@@ -35,9 +41,13 @@ const Feeds = ({ createdPostData }) => {
           <Grid className={styles.middleSide} item xs={12} sm={8} lg={6}>
             <CreatePost onClick={handleClick} />
             <div>
-              {posts.map((post, index) => (
-                <Post post={post} key={index} />
-              ))}
+              {userFeeds?.data ? (
+                userFeeds?.data?.data?.map((post, index) => (
+                  <Post post={post} key={index} />
+                ))
+              ) : (
+                <div>No feed available</div>
+              )}
             </div>
           </Grid>
           <Grid className={styles.rightSide} item xs={0} sm={2} lg={3}></Grid>
@@ -51,7 +61,19 @@ const mapStateToProps = (state, ownProps) => {
   return {
     ...ownProps,
     createdPostData: state.CreatePostReducer,
+    userFeeds: state.FeedReducer,
+  };
+};
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    ...ownProps,
+    getFeed: () => {
+      dispatch(getFeed());
+    },
+    clearFeed: () => {
+      dispatch(clearFeed());
+    },
   };
 };
 
-export default connect(mapStateToProps)(Feeds);
+export default connect(mapStateToProps, mapDispatchToProps)(Feeds);

@@ -7,7 +7,7 @@ export const post = {
     return await axios.post("/post", data);
   },
   feed: async () => {
-    return await axios.get("/post");
+    return await axios.get("/feed");
   },
   getPosts: async (payload) => {
     return await axios.get("/posts");
