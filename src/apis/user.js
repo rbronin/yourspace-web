@@ -2,8 +2,7 @@ import { axios } from "./axios";
 
 export const user = {
   getUser: (payload) => {
-    const { userid } = payload;
-    return axios.get(`/user/${userid}`);
+    return axios.get(`/user`);
   },
   searchUser: (payload) => {
     const { name } = payload;

@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { connect, useDispatch } from "react-redux";
+import { Authentication } from "../store/actions/auth";
+import ProtectedRoute from "./protected-routes";
+import { useToken } from "../Config";
 import About from "../pages/common/About";
 import Home from "../pages/common/Home";
 import Login from "../pages/Auth/Login";
@@ -9,7 +13,16 @@ import $NotFound from "../pages/Error";
 import Profile from "../pages/profile";
 import Search from "../pages/search";
 
-const Routes = () => {
+const Routes = ({ authState }) => {
+  const dispatch = useDispatch();
+  const token = useToken();
+  useEffect(() => {
+    if (token && !authState.data) {
+      dispatch(Authentication({ token }));
+    } else {
+      //do something
+    }
+  }, []); //eslint-disable-line
   return (
     <BrowserRouter>
       <Switch>
@@ -17,13 +30,19 @@ const Routes = () => {
         <Route exact path='/about' component={About} />
         <Route exact path='/signin' component={Login} />
         <Route exact path='/signup' component={Signup} />
-        <Route exact path='/feed' component={Feeds} />
-        <Route exact path='/profile' component={Profile} />
-        <Route exact path='/search' component={Search} />
+        <ProtectedRoute exact path='/feed' component={Feeds} />
+        <ProtectedRoute exact path='/profile' component={Profile} />
+        <ProtectedRoute exact path='/search' component={Search} />
         <Route path='/*' component={$NotFound} />
       </Switch>
     </BrowserRouter>
   );
 };
 
-export default Routes;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    ...ownProps,
+    authState: state.AuthReducer,
+  };
+};
+export default connect(mapStateToProps)(Routes);
