@@ -2,13 +2,15 @@ import React from "react";
 import { Box, Grid, Tab, Tabs, Paper, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { blueGrey } from "@material-ui/core/colors";
+import { connect } from "react-redux";
 
 const imgUrl =
   "https://images.unsplash.com/photo-1555524554-0fdb51cd5020?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1372&q=80";
 
-const Profile = () => {
+const Profile = ({ userData }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  console.log({ userData });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -40,8 +42,8 @@ const Profile = () => {
           ></div>
           <div className={classes.group}>
             <div>
-              <h2 className={classes.name}>Alison Anderson</h2>
-              <h3 className={classes.title}>Web Devloper</h3>
+              <h2 className={classes.name}>{userData?.data?.data?.name ?? "NA"}</h2>
+              <h3 className={classes.title}>{userData?.data?.data?.username ?? "NA"}</h3>
             </div>
             {/* User meta info */}
             <Box
@@ -90,7 +92,13 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    ...ownProps,
+    userData: state.LoggedUserReducer,
+  };
+};
+export default connect(mapStateToProps)(Profile);
 
 const useStyles = makeStyles((theme) => ({
   root: {

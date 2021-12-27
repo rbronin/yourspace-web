@@ -44,6 +44,7 @@ function Login({ login, clearLogin, loginData }) {
     }
   }, [loginData]); //eslint-disable-line
 
+  console.log({ loginData });
   return (
     <div className={styles.root}>
       {loginData?.isLoading && <Loading />}
@@ -56,7 +57,9 @@ function Login({ login, clearLogin, loginData }) {
       >
         <div className={styles.form}>
           <h2>Login to codespace</h2>
-          {loginData?.isError && <Alert severity='error'>{loginData?.error}</Alert>}
+          {loginData?.isError && (
+            <Alert severity='error'>{loginData?.error?.response?.data}</Alert>
+          )}
           <form onSubmit={handleLogin}>
             <FormControl margin='dense' fullWidth>
               <TextField
