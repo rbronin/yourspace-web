@@ -1,8 +1,12 @@
 import { axios } from "./axios";
 
 export const user = {
-  getUser: (payload) => {
-    return axios.get(`/user`);
+  getUser: (token) => {
+    return axios.get(`/user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
   searchUser: (payload) => {
     const { name } = payload;

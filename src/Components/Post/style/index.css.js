@@ -134,6 +134,9 @@ const useStyles = makeStyles((theme) => ({
     outline: `1px solid ${theme.palette.grey[300]}`,
     margin: theme.spacing(0, 1, 0, 0),
   },
+  liked: {
+    background: theme.palette.primary.main,
+  },
 }));
 
 export default useStyles;

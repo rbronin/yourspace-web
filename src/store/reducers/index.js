@@ -4,6 +4,7 @@ import CreatePostReducer from "./post/create-post";
 import FeedReducer from "./post/feed";
 import LoggedUserReducer from "./user/user";
 import AuthReducer from "./auth/auth";
+import GetPostReducer from "./post/get-feed";
 
 export {
   SignupReducer,
@@ -12,4 +13,5 @@ export {
   FeedReducer,
   LoggedUserReducer,
   AuthReducer,
+  GetPostReducer,
 };

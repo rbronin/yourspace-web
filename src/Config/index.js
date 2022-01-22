@@ -1,4 +1,5 @@
 const storeToken = (data) => {
+  localStorage.removeItem("auth-token");
   localStorage.setItem("auth-token", JSON.stringify(data));
 };
 

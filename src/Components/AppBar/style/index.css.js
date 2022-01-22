@@ -1,8 +1,9 @@
 import { makeStyles } from "@material-ui/core";
+import { blue } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
-    backgroundColor: "#fefefe",
+    backgroundColor: blue[50],
     color: theme.palette.primary.main,
     border: "none",
     cursor: "pointer",

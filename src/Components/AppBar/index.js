@@ -1,19 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { AppBar as MuiAppBar, TextField } from "@material-ui/core";
 import { Toolbar, IconButton, Avatar } from "@material-ui/core";
 import { Menu, MenuItem, Fade } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import { deleteToken } from "../../Config";
+import { deleteToken, useToken, getAvatarChars } from "../../Config";
 import useStyles from "./style/index.css";
+import { getUser } from "../../store/actions/users/user";
+import { connect } from "react-redux";
 
-export default function AppBar() {
+function AppBar({ getLoggedUser, loggedUser }) {
   const [isOpen, setIsOpen] = useState(false);
   const [anchorEL, setAnchorEL] = useState(null);
   const classes = useStyles();
-  const avatar = "A";
   const history = useHistory();
+  const token = useToken();
+
+  useEffect(() => {
+    getLoggedUser(token);
+  }, []); //eslint-disable-line
+
+  const user = useMemo(() => {
+    const { isDone, data } = loggedUser;
+    if (isDone && data !== null) {
+      return loggedUser.data;
+    } else {
+      return {};
+    }
+  }, [loggedUser]);
 
   const openMenu = () => {
     setIsOpen(!isOpen);
@@ -30,13 +45,15 @@ export default function AppBar() {
   const profileRoute = () => {
     history.push("/profile");
   };
-  const accountRoute = () => {
-    history.push("/account");
-  };
+  // const accountRoute = () => {
+  //   history.push("/account");
+  // };
   const logout = () => {
     deleteToken();
     history.push("/");
   };
+
+  console.log({ user });
 
   return (
     <MuiAppBar position='static' variant='elevation' elevation={1} color='inherit'>
@@ -67,7 +84,7 @@ export default function AppBar() {
           <Box display='flex' flexDirection='row'>
             <Box marginX={2} />
             <Avatar className={classes.avatar} component='button' onClick={handleClick}>
-              {avatar || "A"}
+              {getAvatarChars(user?.data?.name) || "?"}
             </Avatar>
             <Menu
               id='fade-menu'
@@ -78,7 +95,7 @@ export default function AppBar() {
               TransitionComponent={Fade}
             >
               <MenuItem onClick={profileRoute}>Profile</MenuItem>
-              <MenuItem onClick={accountRoute}>Account</MenuItem>
+              {/* <MenuItem onClick={accountRoute}>Account</MenuItem> */}
               <MenuItem onClick={logout}>Logout</MenuItem>
             </Menu>
           </Box>
@@ -87,3 +104,21 @@ export default function AppBar() {
     </MuiAppBar>
   );
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    ...ownProps,
+    loggedUser: state.LoggedUserReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    ...ownProps,
+    getLoggedUser: (payload) => {
+      dispatch(getUser(payload));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppBar);

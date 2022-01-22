@@ -11,6 +11,7 @@ body {
   background-color: #f9f9f9;
   background-color: #eaeff9;
   background-color: #f7f8fc;
+  background-color: #f4f7f5;
   /* color: #008fa9; */
   /* color: #49ada0; */
   color: #353535;
@@ -41,4 +42,7 @@ body {
 .ri-22px {
   font-size: 22px;
   color: inherit;
+}
+.ri-liked {
+  color: #ff5e5b;
 }

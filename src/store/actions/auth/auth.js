@@ -1,6 +1,5 @@
 import { login, signup } from "../index"; //actions
 import { auth } from "../../../apis"; //auth api
-import { getUser } from "../users/user";
 import { storeToken } from "../../../Config";
 
 export const clearLogin = () => {
@@ -22,7 +21,6 @@ export const emailLogin = (payload) => {
       .then((response) => {
         dispatch(loginSuccess(response.data));
         storeToken(response.data.data.auth_token);
-        dispatch(getUser());
       })
       .catch((err) => {
         dispatch(loginFailed(err));

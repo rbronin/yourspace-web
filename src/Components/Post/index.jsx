@@ -1,15 +1,49 @@
 import { Avatar, Box, Button } from "@material-ui/core";
 import React, { useState } from "react";
+import { useMemo } from "react";
 import { formateDate, getAvatarChars } from "../../Config";
 import useStyles from "./style/index.css";
+import { useToken } from "../../Config";
+import { post as postApi } from "../../apis/post";
 
-const Post = ({ post = {} }) => {
+const Post = ({ post = {}, loggedUser = {} }) => {
   const styles = useStyles();
+  const token = useToken();
+  const [likedRes, setLikedRes] = useState([]);
   const [comments, setComments] = useState({
     show: false,
-    lists: [],
   });
-  const addLikes = () => {};
+  const isLiked = useMemo(() => {
+    const isLiked = post.likes?.findIndex((id) => id === loggedUser._id);
+    if (isLiked >= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }, [likedRes]);
+
+  const isLikedNow = useMemo(() => {
+    const isLike = likedRes.findIndex((id) => id === loggedUser._id);
+    if (isLike >= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }, [likedRes]);
+  const addLikes = () => {
+    postApi
+      .addLike({
+        postid: post._id,
+        token: token,
+      })
+      .then((res) => {
+        setLikedRes([...res.data.data.likes]);
+        console.log({ liked: res.data });
+      })
+      .catch((err) => {
+        console.log({ err });
+      });
+  };
   const showComments = () => {
     setComments({
       ...comments,
@@ -17,6 +51,8 @@ const Post = ({ post = {} }) => {
     });
   };
   const addToCollection = () => {};
+
+  console.log({ post });
 
   let avatar = getAvatarChars(post?.userid?.name) || "N";
 
@@ -43,7 +79,7 @@ const Post = ({ post = {} }) => {
         )}
       </Box>
       <Box>
-        <p className={styles.content}>{post?.content}</p>
+        <p className={styles.content}>{post?.content || post?.title}</p>
       </Box>
       <Box
         className={styles.actions}
@@ -53,7 +89,12 @@ const Post = ({ post = {} }) => {
         alignItems='center'
       >
         <div onClick={addLikes} className={styles.iconButton}>
-          <i className='ri-heart-3-line ri-22px'></i>
+          {isLiked || isLikedNow ? (
+            <i className='ri-heart-3-fill ri-22px ri-liked '></i>
+          ) : (
+            <i className='ri-heart-3-line ri-22px'></i>
+          )}
+
           <p className={styles.buttonText}>Like</p>
         </div>
         <div className={styles.iconButton} onClick={showComments}>
@@ -69,7 +110,9 @@ const Post = ({ post = {} }) => {
         <>
           <AddComment />
           <div className={styles.commentBox}>
-            <Comment />
+            {post.comments?.map((comment) => {
+              return <Comment comment={comment} />;
+            })}
           </div>
         </>
       )}

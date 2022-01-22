@@ -3,14 +3,23 @@ import { axios } from "./axios";
 
 export const post = {
   create: async (payload) => {
-    const { data } = payload;
-    return await axios.post("/post", data);
+    const { data, token } = payload;
+    return await axios.post("/post", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
   feed: async () => {
     return await axios.get("/feed");
   },
   getPosts: async (payload) => {
-    return await axios.get("/posts");
+    const { token } = payload;
+    return await axios.get("/post", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
   getAPost: async (payload) => {
     const { postid } = payload;
@@ -21,8 +30,12 @@ export const post = {
     return await axios.delete(`/post/${postid}`);
   },
   addLike: async (payload) => {
-    const { postid } = payload;
-    return await axios.post(`/likes/${postid}`);
+    const { postid, token } = payload;
+    return await axios.post(`/post/like/${postid}`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
   addComment: async (payload) => {
     const { postid } = payload;

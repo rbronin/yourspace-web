@@ -37,10 +37,10 @@ function Login({ login, clearLogin, loginData }) {
   useEffect(() => {
     const { isDone, data } = loginData;
     if (isDone && data !== null) {
-      storeToken(data.data.auth_token);
-      history.push("/feed", {
-        token: data.data.auth_token,
-      });
+      // storeToken(data.data.auth_token); // storing token in login action
+      if (isDone && data !== null) {
+        history.push("/feed");
+      }
     }
   }, [loginData]); //eslint-disable-line
 
