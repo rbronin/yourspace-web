@@ -11,7 +11,8 @@ const Loading = (props) => {
         width: "100vw",
         height: "100vh",
         alignItems: "center",
-        background: "#242b3d5e",
+        background: "#090c11ce",
+        zIndex: 100,
       }}
     >
       <CircularProgress {...props} />

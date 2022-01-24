@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
     border: "none",
     cursor: "pointer",
+    // padding: 0,
   },
   root: {
     margin: theme.spacing(0, 10),

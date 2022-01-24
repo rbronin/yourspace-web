@@ -1,10 +1,11 @@
 import { Avatar, Box, Button } from "@material-ui/core";
 import React, { useState } from "react";
 import { useMemo } from "react";
-import { formateDate, getAvatarChars } from "../../Config";
+import { formateDate } from "../../Config";
 import useStyles from "./style/index.css";
 import { useToken } from "../../Config";
 import { post as postApi } from "../../apis/post";
+import { UserAvatar } from "../utils";
 
 const Post = ({ post = {}, loggedUser = {} }) => {
   const styles = useStyles();
@@ -51,13 +52,11 @@ const Post = ({ post = {}, loggedUser = {} }) => {
   };
   const addToCollection = () => {};
 
-  let avatar = getAvatarChars(post?.userid?.name) || "N";
-
   return (
     <div className={styles.root}>
       <Box display='flex' flexDirection='row' alignItems='center'>
         <Avatar sizes='lg' className={styles.avatar}>
-          {avatar}
+          <UserAvatar name={post?.userid?.name} />
         </Avatar>
         <div>
           <h3 className={styles.title}>{post?.userid?.name}</h3>
@@ -119,12 +118,12 @@ const Post = ({ post = {}, loggedUser = {} }) => {
 
 export default Post;
 
-const Comment = ({ avatar, name, comment }) => {
+const Comment = ({ name, comment }) => {
   const styles = useStyles();
   return (
     <div className={styles.comment}>
       <Avatar sizes='lg' className={styles.avatar}>
-        {avatar || "A"}
+        <UserAvatar name={name} />
       </Avatar>
       <div className={styles.commentArea}>
         <p className={styles.user}>{name || "Ravi"}</p>
@@ -141,7 +140,7 @@ const AddComment = ({ avatar }) => {
   return (
     <Box display='flex' flexDirection='row' alignItems='center' paddingX={1}>
       <Avatar sizes='lg' className={styles.avatar}>
-        {avatar || "A"}
+        <UserAvatar name={avatar} />
       </Avatar>
       <form className={styles.row}>
         <textarea className={styles.input} required />

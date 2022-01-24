@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { blue } from "@material-ui/core/colors";
-import { getAvatarChars } from "../../Config";
+import { UserAvatar } from "../utils";
 
 function CreatePost({ onClick, user }) {
   const classes = useStyles();
@@ -12,7 +12,7 @@ function CreatePost({ onClick, user }) {
       <div className={classes.root}>
         <div className={classes.row}>
           <Avatar className={classes.avatar} variant='circle'>
-            {getAvatarChars(user?.name) || "?"}
+            <UserAvatar name={user?.name} />
           </Avatar>
           <div className={classes.input} onClick={onClick}>
             Write new post...

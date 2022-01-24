@@ -5,11 +5,12 @@ import { AppBar as MuiAppBar, TextField } from "@material-ui/core";
 import { Toolbar, IconButton, Avatar } from "@material-ui/core";
 import { Menu, MenuItem, Fade } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import { useToken, getAvatarChars } from "../../Config";
+import { useToken } from "../../Config";
 import useStyles from "./style/index.css";
 import { getUser } from "../../store/actions/users/user";
 import { connect } from "react-redux";
 import { Logout } from "../../store/actions/auth/logout";
+import { UserAvatar } from "../utils/index";
 
 function AppBar({ getLoggedUser, loggedUser, logout }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -83,7 +84,7 @@ function AppBar({ getLoggedUser, loggedUser, logout }) {
           <Box display='flex' flexDirection='row'>
             <Box marginX={2} />
             <Avatar className={classes.avatar} component='button' onClick={handleClick}>
-              {getAvatarChars(user?.data?.name) || "?"}
+              <UserAvatar name={user?.data?.name} />
             </Avatar>
             <Menu
               id='fade-menu'

@@ -5,7 +5,8 @@ import { clearCreatePost, createNewPost } from "../../store/actions/posts/create
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
 import { Alert } from "@material-ui/lab";
-import { getAvatarChars, useToken } from "../../Config";
+import { useToken } from "../../Config";
+import { UserAvatar } from "../utils";
 
 const CreatePostForm = ({
   user = {},
@@ -84,7 +85,7 @@ const CreatePostForm = ({
       <div className={classes.divider}></div>
       <div className={classes.rowStart}>
         <Avatar className={classes.avatar} variant='circle'>
-          {getAvatarChars(user?.name) || "?"}
+          <UserAvatar name={user?.name} />
         </Avatar>
 
         <h3 className={classes.title}>{user?.name ?? "??"}</h3>

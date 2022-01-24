@@ -1,6 +1,7 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import Avatars from "boring-avatars";
 
 export function Footer() {
   const date = new Date();
@@ -22,3 +23,10 @@ export function Footer() {
     </Grid>
   );
 }
+
+export const UserAvatar = ({ size = 40, name = "" }) => {
+  let colors = ["#bbdefb", "#64b5f6", "#2196f3", "#1976d2", "#0d47a1"];
+  return (
+    <Avatars size={size} square={false} name={name} variant='beam' colors={colors} />
+  );
+};
