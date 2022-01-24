@@ -48,3 +48,9 @@ export const getPost = {
   GET_POST_SUCCESS: "GET_POST_SUCCESS",
   GET_POST_FAILD: "GET_POST_FAILD",
 };
+
+export const logout = {
+  LOGOUT_START: "LOGOUT_START",
+  LOGOUT_SUCCESS: "LOGOUT_SUCCESS",
+  LOGOUT_FAILD: "LOGOUT_FAILD",
+};

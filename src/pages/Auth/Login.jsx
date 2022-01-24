@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Button, FormControl, TextField, Link, Typography } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
@@ -7,12 +7,22 @@ import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
 import { emailLogin, clearLogin } from "../../store/actions/auth/auth";
 import Loading from "../../Components/utils/Loading";
-import { storeToken } from "../../Config";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 
-function Login({ login, clearLogin, loginData }) {
+function Login({ login, clearLogin, loginData, authData }) {
   const styles = useStyles();
   const history = useHistory();
+  const { state } = useLocation();
+  const pathTo = useMemo(() => {
+    if (state?.hasOwnProperty("from")) {
+      if (state?.from?.hasOwnProperty("pathname")) {
+        return state?.from?.pathname;
+      }
+      return "/feed";
+    } else {
+      return "/feed";
+    }
+  }, [state]);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -34,15 +44,17 @@ function Login({ login, clearLogin, loginData }) {
     });
   };
 
+  console.log({ state });
+
   useEffect(() => {
     const { isDone, data } = loginData;
-    if (isDone && data !== null) {
-      // storeToken(data.data.auth_token); // storing token in login action
-      if (isDone && data !== null) {
-        history.push("/feed");
-      }
+    if (isDone && data !== null && authData.data !== null) {
+      history.push(pathTo);
+      console.log({ authData, loginData });
+    } else {
+      console.log("FAILED", { loginData, authData });
     }
-  }, [loginData]); //eslint-disable-line
+  }, [loginData, authData]); //eslint-disable-line
 
   console.log({ loginData });
   return (
@@ -111,6 +123,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     ...ownProps,
     loginData: state.LoginReducer,
+    authData: state.AuthReducer,
   };
 };
 

@@ -9,8 +9,9 @@ import { deleteToken, useToken, getAvatarChars } from "../../Config";
 import useStyles from "./style/index.css";
 import { getUser } from "../../store/actions/users/user";
 import { connect } from "react-redux";
+import { Logout } from "../../store/actions/auth/logout";
 
-function AppBar({ getLoggedUser, loggedUser }) {
+function AppBar({ getLoggedUser, loggedUser, logout }) {
   const [isOpen, setIsOpen] = useState(false);
   const [anchorEL, setAnchorEL] = useState(null);
   const classes = useStyles();
@@ -48,8 +49,8 @@ function AppBar({ getLoggedUser, loggedUser }) {
   // const accountRoute = () => {
   //   history.push("/account");
   // };
-  const logout = () => {
-    deleteToken();
+  const handleLogout = () => {
+    logout();
     history.push("/");
   };
 
@@ -96,7 +97,7 @@ function AppBar({ getLoggedUser, loggedUser }) {
             >
               <MenuItem onClick={profileRoute}>Profile</MenuItem>
               {/* <MenuItem onClick={accountRoute}>Account</MenuItem> */}
-              <MenuItem onClick={logout}>Logout</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </Box>
         </Grid>
@@ -117,6 +118,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     ...ownProps,
     getLoggedUser: (payload) => {
       dispatch(getUser(payload));
+    },
+    logout: () => {
+      dispatch(Logout());
     },
   };
 };

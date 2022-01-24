@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import { Authentication } from "../store/actions/auth";
 import ProtectedRoute from "./protected-routes";
+import PrivateRoute from "./PrivateRoute";
 import { useToken } from "../Config";
 import About from "../pages/common/About";
 import Home from "../pages/common/Home";
@@ -30,9 +31,15 @@ const Routes = ({ authState }) => {
         <Route exact path='/about' component={About} />
         <Route exact path='/signin' component={Login} />
         <Route exact path='/signup' component={Signup} />
-        <ProtectedRoute exact path='/feed' component={Feeds} />
-        <ProtectedRoute exact path='/profile' component={Profile} />
-        <ProtectedRoute exact path='/search' component={Search} />
+        <PrivateRoute exact path='/feed'>
+          <Feeds />
+        </PrivateRoute>
+        <PrivateRoute exact path='/profile'>
+          <Profile />
+        </PrivateRoute>
+        <PrivateRoute exact path='/search'>
+          <Search />
+        </PrivateRoute>
         <Route path='/*' component={$NotFound} />
       </Switch>
     </BrowserRouter>
