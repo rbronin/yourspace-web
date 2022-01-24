@@ -39,8 +39,6 @@ const Feeds = ({ createdPostData, getFeed, clearFeed, userFeeds, loggedUser }) =
     }
   }, [loggedUser]);
 
-  console.log({ LUD: user });
-
   return (
     <div>
       <AppBar />

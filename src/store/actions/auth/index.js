@@ -1,6 +1,6 @@
 import { authenticate as ACTIONS } from "../index";
 import { auth } from "../../../apis/auth";
-import { getUser } from "../users/user";
+// import { getUser } from "../users/user";
 
 export const clearAuthentication = () => {
   return {
@@ -9,7 +9,7 @@ export const clearAuthentication = () => {
 };
 
 export const Authentication = (payload) => {
-  const { token } = payload;
+  // const { token } = payload;
   return (dispatch) => {
     dispatch(authenticationStart());
     auth

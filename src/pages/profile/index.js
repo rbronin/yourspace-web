@@ -16,7 +16,6 @@ const Profile = ({ userData, getPosts, postData, loggedUser }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const token = useToken();
-  console.log({ userData });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -43,7 +42,6 @@ const Profile = ({ userData, getPosts, postData, loggedUser }) => {
       number: 20,
     },
   ];
-  console.log({ loggedUser });
 
   return (
     <>

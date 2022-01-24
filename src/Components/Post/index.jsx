@@ -20,7 +20,7 @@ const Post = ({ post = {}, loggedUser = {} }) => {
     } else {
       return false;
     }
-  }, [likedRes]);
+  }, []); //eslint-disable-line
 
   const isLikedNow = useMemo(() => {
     const isLike = likedRes.findIndex((id) => id === loggedUser._id);
@@ -29,7 +29,7 @@ const Post = ({ post = {}, loggedUser = {} }) => {
     } else {
       return false;
     }
-  }, [likedRes]);
+  }, [likedRes]); //eslint-disable-line
   const addLikes = () => {
     postApi
       .addLike({
@@ -38,7 +38,6 @@ const Post = ({ post = {}, loggedUser = {} }) => {
       })
       .then((res) => {
         setLikedRes([...res.data.data.likes]);
-        console.log({ liked: res.data });
       })
       .catch((err) => {
         console.log({ err });
@@ -51,8 +50,6 @@ const Post = ({ post = {}, loggedUser = {} }) => {
     });
   };
   const addToCollection = () => {};
-
-  console.log({ post });
 
   let avatar = getAvatarChars(post?.userid?.name) || "N";
 

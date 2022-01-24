@@ -5,7 +5,7 @@ import { AppBar as MuiAppBar, TextField } from "@material-ui/core";
 import { Toolbar, IconButton, Avatar } from "@material-ui/core";
 import { Menu, MenuItem, Fade } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import { deleteToken, useToken, getAvatarChars } from "../../Config";
+import { useToken, getAvatarChars } from "../../Config";
 import useStyles from "./style/index.css";
 import { getUser } from "../../store/actions/users/user";
 import { connect } from "react-redux";
@@ -53,8 +53,6 @@ function AppBar({ getLoggedUser, loggedUser, logout }) {
     logout();
     history.push("/");
   };
-
-  console.log({ user });
 
   return (
     <MuiAppBar position='static' variant='elevation' elevation={1} color='inherit'>

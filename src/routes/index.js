@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import { Authentication } from "../store/actions/auth";
-import ProtectedRoute from "./protected-routes";
 import PrivateRoute from "./PrivateRoute";
 import { useToken } from "../Config";
 import About from "../pages/common/About";

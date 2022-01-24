@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Route } from "react-router-dom";
@@ -6,7 +6,6 @@ import { useAuthentication } from "./route-hooks";
 
 const PrivateRoute = ({ authState, loginData, children, ...rest }) => {
   const isAuthenticated = useAuthentication();
-  console.log({ isAuthenticated });
   return (
     <Route
       {...rest}

@@ -44,19 +44,13 @@ function Login({ login, clearLogin, loginData, authData }) {
     });
   };
 
-  console.log({ state });
-
   useEffect(() => {
     const { isDone, data } = loginData;
     if (isDone && data !== null && authData.data !== null) {
       history.push(pathTo);
-      console.log({ authData, loginData });
-    } else {
-      console.log("FAILED", { loginData, authData });
     }
   }, [loginData, authData]); //eslint-disable-line
 
-  console.log({ loginData });
   return (
     <div className={styles.root}>
       {loginData?.isLoading && <Loading />}

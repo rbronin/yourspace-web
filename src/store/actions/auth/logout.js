@@ -1,4 +1,4 @@
-import { logout as ACTIONS } from "../index";
+// import { logout as ACTIONS } from "../index";
 import { deleteToken } from "../../../Config";
 import { clearUser } from "../users/user";
 import { clearLogin, clearSignup } from "../auth/auth";
