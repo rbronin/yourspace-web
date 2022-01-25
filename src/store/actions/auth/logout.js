@@ -5,6 +5,7 @@ import { clearLogin, clearSignup } from "../auth/auth";
 import { clearAuthentication } from "../auth/index";
 import { clearFeed } from "../posts/feed";
 import { clearPost } from "../posts/get-post";
+import { clearRecommendation } from "../users/recommend";
 
 export const Logout = () => {
   return (dispatch) => {
@@ -16,6 +17,7 @@ export const Logout = () => {
     dispatch(clearSignup());
     dispatch(clearFeed());
     dispatch(clearPost());
+    dispatch(clearRecommendation());
     // dispatch(LogoutSuccess());
   };
 };

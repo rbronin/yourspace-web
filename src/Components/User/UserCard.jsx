@@ -1,32 +1,24 @@
 import React from "react";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemText from "@material-ui/core/ListItemText";
+import Box from "@material-ui/core/Box";
 import Avatar from "@material-ui/core/Avatar";
-import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import { blue } from "@material-ui/core/colors";
+import { blueGrey } from "@material-ui/core/colors";
+import { UserAvatar } from "../utils";
 
-function UserCard(props) {
+function UserCard({ user, key }) {
   const classes = useStyles();
-  const { name, username, key } = props;
-  const avatar = name ? name.slice(0, 1).toUpperCase() : "NA";
+
   return (
-    <Card variant="outlined">
-      <ListItem key={key} classes={classes.root}>
-        <ListItemAvatar>
-          <Avatar className={classes.avatar}>{avatar}</Avatar>
-        </ListItemAvatar>
-        <ListItemText primary={name} secondary={username} />
-        <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label="follow">
-            <i class="ri-user-add-line"></i>
-          </IconButton>
-        </ListItemSecondaryAction>
-      </ListItem>
-    </Card>
+    <Box padding='10px' margin='10px auto' display='flex' className={classes.root}>
+      <Avatar sizes=''>
+        <UserAvatar name={user?.name} />
+      </Avatar>
+      <div style={{ marginLeft: "10px" }}>
+        <h5 className={classes.name}>{user?.name}</h5>
+        <p className={classes.uName}>@ {user?.username}</p>
+      </div>
+      <div></div>
+    </Box>
   );
 }
 
@@ -34,11 +26,25 @@ export default UserCard;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: " 200px",
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    borderRadius: 5,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: theme.palette.grey[50],
+    },
   },
-  avatar: {
-    backgroundColor: blue[800],
+  name: {
+    fontSize: 17,
+    fontWeight: 600,
+    margin: 0,
+    color: blueGrey[600],
+    textTransform: "capitalize",
+  },
+  uName: {
+    fontSize: 15,
+    fontWeight: 500,
+    margin: 0,
+    color: blueGrey[400],
+    textTransform: "lowercase",
   },
 }));

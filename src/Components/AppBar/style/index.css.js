@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     // padding: 0,
   },
   root: {
-    margin: theme.spacing(0, 10),
+    margin: theme.spacing(0, 4),
   },
   logo: {
     color: theme.palette.primary.main,

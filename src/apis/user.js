@@ -30,4 +30,13 @@ export const user = {
   feed: () => {
     return axios.get(`/feed`);
   },
+
+  getRecommendation: (payload) => {
+    const { token } = payload;
+    return axios.get("/user/recommend", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
 };

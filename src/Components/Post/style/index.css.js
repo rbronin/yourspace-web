@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import { blue } from "@material-ui/core/colors";
+import { blue, blueGrey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,14 +17,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
   title: {
-    fontWeight: "bold",
-    color: theme.palette.grey[600],
+    fontWeight: 600,
+    color: blueGrey[600],
     margin: theme.spacing(0),
+    textTransform: "capitalize",
   },
   dateText: {
     fontWeight: 500,
     fontSize: 10,
-    color: theme.palette.grey[600],
+    color: blueGrey[500],
     margin: theme.spacing(0, 0, 1),
   },
   content: {

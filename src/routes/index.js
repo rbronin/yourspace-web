@@ -36,9 +36,9 @@ const Routes = ({ authState }) => {
         <PrivateRoute exact path='/profile'>
           <Profile />
         </PrivateRoute>
-        <PrivateRoute exact path='/search'>
+        <Route exact path='/search'>
           <Search />
-        </PrivateRoute>
+        </Route>
         <Route path='/*' component={$NotFound} />
       </Switch>
     </BrowserRouter>
