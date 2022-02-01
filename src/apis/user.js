@@ -39,4 +39,11 @@ export const user = {
       },
     });
   },
+  addToCollections: async ({ itemid, token }) => {
+    return await axios.post(`/user/collections/${itemid}`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
 };

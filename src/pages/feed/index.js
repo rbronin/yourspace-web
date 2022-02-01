@@ -30,7 +30,7 @@ const Feeds = ({
   useEffect(() => {
     getFeed();
     return clearFeed;
-  }, []); //eslint-disable-line
+  }, [createdPostData]); //eslint-disable-line
   useEffect(() => {
     if (userFeeds.isDone === true && userFeeds.data !== null) {
       recommendedUser({ token });
@@ -53,7 +53,6 @@ const Feeds = ({
       return {};
     }
   }, [loggedUser]);
-  console.log({ user });
   return (
     <div>
       <AppBar />

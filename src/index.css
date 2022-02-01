@@ -45,4 +45,9 @@ body {
 }
 .ri-liked {
   color: #ff5e5b;
+  color: #536dfe;
+}
+.ri-added {
+  color: #4caf50;
+  color: #536dfe;
 }
