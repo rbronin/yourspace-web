@@ -5,14 +5,26 @@ import { blueGrey } from "@material-ui/core/colors";
 import { connect } from "react-redux";
 import AppBar from "../../Components/AppBar";
 import { getPost } from "../../store/actions/posts/get-post";
+import { getCollections } from "../../store/actions/users/collections";
+import { getFriends } from "../../store/actions/users/friends";
 import { useToken } from "../../Config";
 import { Skeleton, Alert } from "@material-ui/lab";
 import Post from "../../Components/Post";
+import UserCard from "../../Components/User/UserCard";
 
 const imgUrl =
   "https://images.unsplash.com/photo-1555524554-0fdb51cd5020?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1372&q=80";
 
-const Profile = ({ userData, getPosts, postData, loggedUser }) => {
+const Profile = ({
+  userData,
+  getPosts,
+  postData,
+  loggedUser,
+  getCollections,
+  getFriends,
+  collectionData,
+  friendData,
+}) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const token = useToken();
@@ -22,8 +34,12 @@ const Profile = ({ userData, getPosts, postData, loggedUser }) => {
   };
 
   useEffect(() => {
-    if (value === 0) {
+    if (value === 0 && postData.data === null) {
       getPosts({ token: token });
+    } else if (value === 1 && friendData.data === null) {
+      getFriends({ token: token });
+    } else if (value === 2 && collectionData.data === null) {
+      getCollections({ token: token });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
@@ -109,7 +125,12 @@ const Profile = ({ userData, getPosts, postData, loggedUser }) => {
                 <Tab label='Friends' />
                 <Tab label='Collections' />
               </Tabs>
-              <Box width='full' bgcolor='white' minHeight='200px'>
+              <Box
+                width='full'
+                bgcolor='white'
+                minHeight='200px'
+                borderRadius='0px 0px 10px 10px'
+              >
                 <TabPanel color='black' value={value} index={0} style={{ paddingX: 10 }}>
                   {postData.isLoading &&
                     [1, 2, 3, 4].map((item) => {
@@ -141,7 +162,7 @@ const Profile = ({ userData, getPosts, postData, loggedUser }) => {
                   {postData.isError && (
                     <Alert severity='error'>{postData.error?.response?.data}</Alert>
                   )}
-                  <Box paddingX={4}>
+                  <Box className={classes.tabBox}>
                     {postData.data &&
                       postData.data?.data?.map((post) => {
                         return <Post post={post} loggedUser={loggedUser.data.data} />;
@@ -149,10 +170,78 @@ const Profile = ({ userData, getPosts, postData, loggedUser }) => {
                   </Box>
                 </TabPanel>
                 <TabPanel color='black' value={value} index={1}>
-                  Comming soon 😎
+                  <Box className={classes.tabBox}>
+                    {friendData.isLoading &&
+                      [1, 2].map((item) => {
+                        return (
+                          <Box width='70%' marginX='auto' marginY={2}>
+                            <Box
+                              display='flex'
+                              justifyContent='space-between'
+                              mb={1}
+                              width='100%'
+                            >
+                              <Skeleton
+                                animation='wave'
+                                variant='circle'
+                                width={40}
+                                height={40}
+                              />
+                              <Skeleton animation='wave' variant='text' width='90%' />
+                            </Box>
+                          </Box>
+                        );
+                      })}
+                    {friendData.isError && (
+                      <Alert severity='error'>
+                        {collectionData.error?.response?.data}
+                      </Alert>
+                    )}
+                    {friendData.data &&
+                      friendData.data?.result.map((friend) => {
+                        return <UserCard user={friend} key={friend?._id} />;
+                      })}
+                  </Box>
                 </TabPanel>
                 <TabPanel color='black' value={value} index={2}>
-                  Comming soon 😎
+                  <Box className={classes.tabBox}>
+                    {collectionData.isLoading &&
+                      [1, 2].map((item) => {
+                        return (
+                          <Box width='70%' marginX='auto' marginY={2}>
+                            <Box
+                              display='flex'
+                              justifyContent='space-between'
+                              mb={1}
+                              width='100%'
+                            >
+                              <Skeleton
+                                animation='wave'
+                                variant='circle'
+                                width={40}
+                                height={40}
+                              />
+                              <Skeleton animation='wave' variant='text' width='90%' />
+                            </Box>
+                            <Skeleton
+                              animation='wave'
+                              variant='rect'
+                              width='full'
+                              height={118}
+                            />
+                          </Box>
+                        );
+                      })}
+                    {postData.isError && (
+                      <Alert severity='error'>
+                        {collectionData.error?.response?.data}
+                      </Alert>
+                    )}
+                    {collectionData.data &&
+                      collectionData.data?.result.map((item) => {
+                        return <Post post={item} loggedUser={loggedUser.data.data} />;
+                      })}
+                  </Box>
                 </TabPanel>
               </Box>
             </Paper>
@@ -169,6 +258,8 @@ const mapStateToProps = (state, ownProps) => {
     userData: state.LoggedUserReducer,
     postData: state.GetPostReducer,
     loggedUser: state.LoggedUserReducer,
+    collectionData: state.GetCollectionsReducer,
+    friendData: state.GetFriendsReducer,
   };
 };
 
@@ -177,6 +268,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     ...ownProps,
     getPosts: (payload) => {
       dispatch(getPost(payload));
+    },
+    getCollections: (payload) => {
+      dispatch(getCollections(payload));
+    },
+    getFriends: (payload) => {
+      dispatch(getFriends(payload));
     },
   };
 };
@@ -193,7 +290,7 @@ function TabPanel({ children, value, index, style, ...other }) {
       {...other}
     >
       {value === index && (
-        <Box p={2} color='#000000'>
+        <Box p={1} color='#000000'>
           {children}
         </Box>
       )}
@@ -207,6 +304,8 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.primary.main,
     color: "#ffffff",
     borderColor: theme.palette.grey[300],
+    marginBottom: 15,
+    borderRadius: 10,
   },
   img: {
     width: 250,
@@ -254,7 +353,8 @@ const useStyles = makeStyles((theme) => ({
   },
   box: {
     background: theme.palette.common.white,
-    boxShadow: theme.shadows[1],
+    // boxShadow: theme.shadows[1],
+    border: `1px solid ${theme.palette.grey[300]}`,
     margin: theme.spacing(2, 0),
     borderRadius: 10,
     display: "flex",
@@ -266,7 +366,21 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       flexDirection: "column",
       alignItems: "center",
+      margin: theme.spacing(0, 0),
+      paddingTop: 15,
       boxShadow: theme.shadows[0],
+    },
+  },
+  tabBox: {
+    paddingX: 3,
+    [theme.breakpoints.down("xl")]: {
+      paddingX: 3,
+    },
+    [theme.breakpoints.down("lg")]: {
+      paddingX: 2,
+    },
+    [theme.breakpoints.down("xs")]: {
+      paddingX: 1,
     },
   },
   metaGroup: {

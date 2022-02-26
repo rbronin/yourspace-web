@@ -46,4 +46,10 @@ export const user = {
       },
     });
   },
+  getUserCollections: async (payload) => {
+    return await axios.get(`/user/collections`);
+  },
+  getUserFriends: async (payload) => {
+    return await axios.get(`/user/friends`);
+  },
 };

@@ -54,7 +54,9 @@ function AppBar({ getLoggedUser, loggedUser, logout }) {
     logout();
     history.push("/");
   };
-
+  const feedRoute = () => {
+    history.push("/feed");
+  };
   return (
     <MuiAppBar position='static' variant='elevation' elevation={1} color='inherit'>
       <Toolbar>
@@ -71,7 +73,7 @@ function AppBar({ getLoggedUser, loggedUser, logout }) {
             justifyContent='start'
             alignItems='center'
           >
-            <IconButton>
+            <IconButton onClick={feedRoute}>
               <i className={`ri-space-ship-line ${classes.logo}`}></i>
             </IconButton>
             <TextField

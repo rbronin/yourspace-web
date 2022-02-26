@@ -9,6 +9,8 @@ import GetRecommendReducer from "./user/recommend";
 import FollowReducer from "./user/follow";
 import AddCommentReducer from "./post/add-comment";
 import GetCommentReducer from "./post/get-comment";
+import GetCollectionsReducer from "./user/collections";
+import GetFriendsReducer from "./user/friends";
 
 export {
   SignupReducer,
@@ -22,4 +24,6 @@ export {
   FollowReducer,
   AddCommentReducer,
   GetCommentReducer,
+  GetCollectionsReducer,
+  GetFriendsReducer,
 };

@@ -6,6 +6,8 @@ import { clearAuthentication } from "../auth/index";
 import { clearFeed } from "../posts/feed";
 import { clearPost } from "../posts/get-post";
 import { clearRecommendation } from "../users/recommend";
+import { clearCollections } from "../users/collections";
+import { clearFriends } from "../users/friends";
 
 export const Logout = () => {
   return (dispatch) => {
@@ -18,6 +20,8 @@ export const Logout = () => {
     dispatch(clearFeed());
     dispatch(clearPost());
     dispatch(clearRecommendation());
+    dispatch(clearCollections());
+    dispatch(clearFriends());
     // dispatch(LogoutSuccess());
   };
 };
