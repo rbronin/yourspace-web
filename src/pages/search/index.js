@@ -1,71 +1,95 @@
-import React from "react";
-import { Box, Typography, Avatar } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Box, Container } from "@material-ui/core";
+import { Skeleton, Alert } from "@material-ui/lab";
+import { useLocation } from "react-router-dom";
+import { useQuery, useToken } from "../../Config";
+import AppBar from "../../Components/AppBar";
+import { searchUser, clearSearchUser } from "../../store/actions/users/search";
+import { connect } from "react-redux";
+import UserCard from "../../Components/User/UserCard";
 
-const userList = [
-  {
-    _id: "5f8337dc52d93415ccd6ceca",
-    date: "2020-10-11T16:46:58.719Z",
-    name: "ravi",
-    username: "ravics",
-    email: "ravi@1mail.com",
-    __v: 0,
-  },
-  {
-    _id: "5f85db9ce7cacb26b4e3652a",
-    date: "2020-10-13T16:52:01.330Z",
-    name: "vipin",
-    username: "vpncs",
-    email: "vp@mail.com",
-    __v: 0,
-  },
-  {
-    _id: "5f86941920162312b04b4110",
-    date: "2020-10-14T06:00:27.139Z",
-    name: "vishnu",
-    username: "vsg",
-    email: "vsg@mail.com",
-    __v: 0,
-  },
-  {
-    _id: "5fa2fbf8b1f4c505f4aca1b7",
-    date: "2020-11-04T08:41:37.863Z",
-    name: "Test1",
-    email: "test@g.com",
-    username: "test",
-    __v: 0,
-  },
-];
-
-const Search = () => {
+const Search = ({ searchUser, searchData, clearSearch }) => {
+  const { search } = useLocation();
+  const token = useToken();
+  const query = useQuery();
+  const [str, setStr] = useState(() => {
+    const name = query.get("s") || "";
+    return name;
+  });
+  useEffect(() => {
+    const name = query.get("s");
+    setStr(name);
+  }, [search]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    searchUser({
+      name: str,
+      token: token,
+    });
+    return () => {
+      clearSearch();
+    };
+  }, [str]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
-    <div style={{ padding: "20px" }}>
-      {userList.map((user) => (
-        <UserCard user={user} />
-      ))}
+    <div>
+      <AppBar searchValue={str} />
+      <Container maxWidth='lg'>
+        {searchData.isLoading &&
+          [1, 2, 3, 4].map((item) => {
+            return (
+              <Box width='100%' marginX='auto' marginY={2}>
+                <Box
+                  display='flex'
+                  justifyContent='space-between'
+                  alignItems={"center"}
+                  mb={1}
+                  width='100%'
+                >
+                  <Skeleton animation='wave' variant='circle' width={40} height={40} />
+                  <Skeleton animation='wave' variant='text' height={60} width='95%' />
+                </Box>
+              </Box>
+            );
+          })}
+        {searchData.isDone && searchData.error !== null && (
+          <Box display={"flex"} justifyContent='center' paddingY={2}>
+            <Alert variant='outlined' severity='error'>
+              {searchData.error?.response?.data?.error || "Some error occured"}
+            </Alert>
+          </Box>
+        )}
+        {searchData.data && searchData.data?.result?.length === 0 && (
+          <Box display={"flex"} justifyContent='center' paddingY={4}>
+            <Alert variant='outlined' severity='warning'>
+              No User found!
+            </Alert>
+          </Box>
+        )}
+
+        {searchData.data &&
+          searchData.data?.result?.length > 0 &&
+          searchData.data?.result?.map((user) => <UserCard user={user} />)}
+      </Container>
     </div>
   );
 };
 
-export default Search;
-
-const UserCard = ({ user = {} }) => {
-  return (
-    <Box
-      padding='10px'
-      margin='10px auto'
-      border='1px solid gray'
-      borderRadius={10}
-      display='flex'
-    >
-      <Avatar sizes=''>A</Avatar>
-      <div style={{ marginLeft: "10px" }}>
-        <Typography color='textPrimary' variant='body1'>
-          {user?.name}
-        </Typography>
-        <Typography u color='textSecondary' variant='body2'>
-          @ {user?.username}
-        </Typography>
-      </div>
-    </Box>
-  );
+const mapStateToProps = (state, ownProps) => {
+  return {
+    ...ownProps,
+    searchData: state.SearchUserReducer,
+  };
 };
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    ...ownProps,
+    searchUser: (payload) => {
+      dispatch(searchUser(payload));
+    },
+    clearSearch: () => {
+      dispatch(clearSearchUser());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

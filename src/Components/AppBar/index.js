@@ -12,9 +12,10 @@ import { connect } from "react-redux";
 import { Logout } from "../../store/actions/auth/logout";
 import { UserAvatar } from "../utils/index";
 
-function AppBar({ getLoggedUser, loggedUser, logout }) {
+function AppBar({ getLoggedUser, loggedUser, logout, searchValue = "" }) {
   const [isOpen, setIsOpen] = useState(false);
   const [anchorEL, setAnchorEL] = useState(null);
+  const [searchStr, setSearchStr] = useState(searchValue);
   const classes = useStyles();
   const history = useHistory();
   const token = useToken();
@@ -57,6 +58,15 @@ function AppBar({ getLoggedUser, loggedUser, logout }) {
   const feedRoute = () => {
     history.push("/feed");
   };
+
+  const getSearchStr = (e) => {
+    setSearchStr(e.target.value);
+  };
+  const handleSearch = (e) => {
+    e.preventDefault();
+    history.push(`/search?s=${searchStr}`);
+  };
+
   return (
     <MuiAppBar position='static' variant='elevation' elevation={1} color='inherit'>
       <Toolbar>
@@ -76,12 +86,16 @@ function AppBar({ getLoggedUser, loggedUser, logout }) {
             <IconButton onClick={feedRoute}>
               <i className={`ri-space-ship-line ${classes.logo}`}></i>
             </IconButton>
-            <TextField
-              size='small'
-              type='text'
-              variant='outlined'
-              placeholder='Seacrh by name...'
-            />
+            <form onSubmit={handleSearch}>
+              <TextField
+                onChange={getSearchStr}
+                size='small'
+                type='search'
+                variant='outlined'
+                placeholder='Seacrh by name...'
+                value={searchStr}
+              />
+            </form>
           </Box>
           <Box display='flex' flexDirection='row'>
             <Box marginX={2} />

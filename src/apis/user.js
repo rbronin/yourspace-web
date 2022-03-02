@@ -9,8 +9,12 @@ export const user = {
     });
   },
   searchUser: (payload) => {
-    const { name } = payload;
-    return axios.get(`/user?q=${name}`);
+    const { name, token } = payload;
+    return axios.get(`/user/search?s=${name}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
   followUser: (payload) => {
     const { userid } = payload;
@@ -47,9 +51,19 @@ export const user = {
     });
   },
   getUserCollections: async (payload) => {
-    return await axios.get(`/user/collections`);
+    const { token } = payload;
+    return await axios.get(`/user/collections`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
   getUserFriends: async (payload) => {
-    return await axios.get(`/user/friends`);
+    const { token } = payload;
+    return await axios.get(`/user/friends`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 };

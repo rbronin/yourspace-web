@@ -1,3 +1,5 @@
+import React from "react";
+import { useLocation } from "react-router-dom";
 const storeToken = (data) => {
   localStorage.removeItem("auth-token");
   localStorage.setItem("auth-token", JSON.stringify(data));
@@ -29,4 +31,10 @@ const getAvatarChars = (nameStr = "") => {
     .toLocaleUpperCase();
 };
 
-export { storeToken, useToken, deleteToken, formateDate, getAvatarChars };
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
+export { storeToken, useToken, deleteToken, formateDate, getAvatarChars, useQuery };

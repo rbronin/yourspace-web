@@ -11,6 +11,7 @@ import AddCommentReducer from "./post/add-comment";
 import GetCommentReducer from "./post/get-comment";
 import GetCollectionsReducer from "./user/collections";
 import GetFriendsReducer from "./user/friends";
+import SearchUserReducer from "./user/search";
 
 export {
   SignupReducer,
@@ -26,4 +27,5 @@ export {
   GetCommentReducer,
   GetCollectionsReducer,
   GetFriendsReducer,
+  SearchUserReducer,
 };
