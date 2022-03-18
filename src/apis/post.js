@@ -42,8 +42,16 @@ export const post = {
     });
   },
   addComment: async (payload) => {
-    const { postid } = payload;
-    return await axios.post(`/comments/${postid}`);
+    const { postid, data, token } = payload;
+    return await axios.post(
+      `/post/comment/${postid}`,
+      { data },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
   },
   getLikes: async (payload) => {
     const { postid, token } = payload;

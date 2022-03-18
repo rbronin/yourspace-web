@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 2,
   },
   commentBox: {
-    padding: theme.spacing(0.5, 1),
+    padding: theme.spacing(0.5, 4),
     borderTop: `1px solid ${theme.palette.grey[200]}`,
   },
   comment: {
@@ -94,8 +94,8 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: { color: theme.palette.grey[600] },
   user: {
-    fontSize: 16,
-    fontWeight: 700,
+    fontSize: 15,
+    fontWeight: 600,
     margin: theme.spacing(0),
     color: theme.palette.grey[700],
   },

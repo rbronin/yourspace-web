@@ -15,6 +15,7 @@ const Post = ({ post = {}, loggedUser = {} }) => {
   const [likedRes, setLikedRes] = useState([]);
   const [comments, setComments] = useState({
     show: false,
+    data: post?.comments || [],
   });
   const [collection, setCollection] = useState({
     type: "success",
@@ -88,6 +89,30 @@ const Post = ({ post = {}, loggedUser = {} }) => {
       });
   };
 
+  const submitComment = (cmt) => {
+    postApi
+      .addComment({
+        postid: post._id,
+        data: cmt,
+        token,
+      })
+      .then((res) => {
+        console.log({ res });
+        setComments({
+          ...comments,
+          data: res.data?.comments,
+        });
+      })
+      .catch((err) => {
+        setCollection({
+          type: "error",
+          msg: err.response?.data?.message || "Unable to add in comment",
+          isOpen: true,
+          result: false,
+        });
+      });
+  };
+
   return (
     <div className={styles.root}>
       <Snackbar
@@ -154,9 +179,9 @@ const Post = ({ post = {}, loggedUser = {} }) => {
       </Box>
       {comments.show && (
         <>
-          <AddComment avatar={loggedUser?.username} />
+          <AddComment avatar={loggedUser?.username} onCommentPost={submitComment} />
           <div className={styles.commentBox}>
-            {post.comments?.map((comment) => {
+            {comments.data?.map((comment) => {
               return <Comment comment={comment} />;
             })}
           </div>
@@ -168,32 +193,44 @@ const Post = ({ post = {}, loggedUser = {} }) => {
 
 export default Post;
 
-const Comment = ({ name, comment }) => {
+const Comment = ({ comment }) => {
   const styles = useStyles();
   return (
     <div className={styles.comment}>
       <Avatar sizes='lg' className={styles.avatar}>
-        <UserAvatar name={name} />
+        <UserAvatar name={comment?.id} />
       </Avatar>
       <div className={styles.commentArea}>
-        <p className={styles.user}>{name || "Ravi"}</p>
-        <p className={styles.userComment}>
-          {comment || "Lorem ipsum, dolor sit amet consectetur adipisicing elit."}
-        </p>
+        <p className={styles.user}>{comment?.user?.name || "NA"}</p>
+        <p className={styles.userComment}>{comment?.body}</p>
       </div>
     </div>
   );
 };
 
-const AddComment = ({ avatar }) => {
+const AddComment = ({ avatar, onCommentPost }) => {
   const styles = useStyles();
+  const [comment, setComment] = useState("");
+  const handleValue = (e) => {
+    setComment(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onCommentPost(comment);
+    setComment("");
+  };
   return (
     <Box display='flex' flexDirection='row' alignItems='center' paddingX={1}>
       <Avatar sizes='lg' className={styles.avatar}>
         <UserAvatar name={avatar} />
       </Avatar>
-      <form className={styles.row}>
-        <textarea className={styles.input} required />
+      <form className={styles.row} onSubmit={handleSubmit}>
+        <textarea
+          className={styles.input}
+          required
+          onChange={handleValue}
+          value={comment}
+        />
         <Button type='submit' size='small' color='primary' variant='contained'>
           Post
         </Button>
