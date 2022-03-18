@@ -5,19 +5,57 @@ import IconButton from "@material-ui/core/IconButton";
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
 import { blueGrey } from "@material-ui/core/colors";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 import { UserAvatar } from "../utils";
+import { user as userAPI } from "../../apis/user";
+import { useToken } from "../../Config";
 
 // <i className="ri-user-follow-line"></i>
 // <i className="ri-user-unfollow-line"></i>
 // <i className='ri-user-add-line'></i>;
+function Alert(props) {
+  return <MuiAlert elevation={6} variant='filled' {...props} />;
+}
 
 function UserCard({ user, key }) {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [msg, setMsg] = useState({
+    type: "",
+    data: "",
+  });
   const [followed, setFollowed] = useState(false);
+  const token = useToken();
 
   const handleFollow = () => {
-    setFollowed((v) => !v);
+    userAPI
+      .followUser({
+        userid: user._id,
+        token,
+      })
+      .then((res) => {
+        console.log({ res });
+        setOpen(true);
+        setMsg({
+          type: "success",
+          data: `You started following ${user?.name}`,
+        });
+        setFollowed((v) => !v);
+      })
+      .catch((err) => {
+        console.log({ err });
+        setOpen(true);
+        setMsg({
+          type: "error",
+          data: err.response?.data?.error,
+        });
+      });
   };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Box
       padding='5px'
@@ -27,6 +65,16 @@ function UserCard({ user, key }) {
       alignItems='center'
       className={classes.root}
     >
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert onClose={handleClose} severity={msg.type}>
+          {msg.data}
+        </Alert>
+      </Snackbar>
       <Avatar sizes=''>
         <UserAvatar name={user?.name} />
       </Avatar>
@@ -47,7 +95,10 @@ function UserCard({ user, key }) {
             </Tooltip>
             <Tooltip title='unfollow'>
               <IconButton className={classes.unfollowBtn} onClick={handleFollow}>
-                <i style={{ fontSize: "inherit" }} className='ri-user-unfollow-fill'></i>
+                <i
+                  style={{ fontSize: "inherit" }}
+                  className='ri-user-unfollow-fill ri-remove'
+                ></i>
               </IconButton>
             </Tooltip>
           </>

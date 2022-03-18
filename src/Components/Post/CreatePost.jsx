@@ -12,7 +12,7 @@ function CreatePost({ onClick, user }) {
       <div className={classes.root}>
         <div className={classes.row}>
           <Avatar className={classes.avatar} variant='circle'>
-            <UserAvatar name={user?.name} />
+            <UserAvatar name={user?.username} />
           </Avatar>
           <div className={classes.input} onClick={onClick}>
             Write new post...

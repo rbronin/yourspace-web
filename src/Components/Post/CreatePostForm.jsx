@@ -85,7 +85,7 @@ const CreatePostForm = ({
       <div className={classes.divider}></div>
       <div className={classes.rowStart}>
         <Avatar className={classes.avatar} variant='circle'>
-          <UserAvatar name={user?.name} />
+          <UserAvatar name={user?.username} />
         </Avatar>
 
         <h3 className={classes.title}>{user?.name ?? "??"}</h3>

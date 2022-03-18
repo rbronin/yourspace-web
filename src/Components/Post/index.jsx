@@ -102,7 +102,7 @@ const Post = ({ post = {}, loggedUser = {} }) => {
       </Snackbar>
       <Box display='flex' flexDirection='row' alignItems='center'>
         <Avatar sizes='lg' className={styles.avatar}>
-          <UserAvatar name={post?.userid?.name} />
+          <UserAvatar name={post?.userid?.username} />
         </Avatar>
         <div>
           <h3 className={styles.title}>{post?.userid?.name}</h3>
@@ -154,7 +154,7 @@ const Post = ({ post = {}, loggedUser = {} }) => {
       </Box>
       {comments.show && (
         <>
-          <AddComment />
+          <AddComment avatar={loggedUser?.username} />
           <div className={styles.commentBox}>
             {post.comments?.map((comment) => {
               return <Comment comment={comment} />;

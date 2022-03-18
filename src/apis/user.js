@@ -17,12 +17,20 @@ export const user = {
     });
   },
   followUser: (payload) => {
-    const { userid } = payload;
-    return axios.post(`/user/follow/${userid}`);
+    const { userid, token } = payload;
+    return axios.post(`/user/follow/${userid}`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
   unfollowUser: (payload) => {
-    const { userid } = payload;
-    return axios.delete(`/user/follow/${userid}`);
+    const { userid, token } = payload;
+    return axios.delete(`/user/follow/${userid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
   getProfile: (payload) => {
     return axios.get(`/profile`);

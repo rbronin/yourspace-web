@@ -26,8 +26,12 @@ export const post = {
     return await axios.get(`/post?id=${postid}`);
   },
   deletePost: async (payload) => {
-    const { postid } = payload;
-    return await axios.delete(`/post/${postid}`);
+    const { postid, token } = payload;
+    return await axios.delete(`/post/${postid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
   addLike: async (payload) => {
     const { postid, token } = payload;
@@ -42,11 +46,19 @@ export const post = {
     return await axios.post(`/comments/${postid}`);
   },
   getLikes: async (payload) => {
-    const { postid } = payload;
-    return await axios.get(`/likes/${postid}`);
+    const { postid, token } = payload;
+    return await axios.get(`/likes/${postid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
   getComments: async (payload) => {
-    const { postid } = payload;
-    return await axios.get(`/comments/${postid}`);
+    const { postid, token } = payload;
+    return await axios.get(`/comments/${postid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 };

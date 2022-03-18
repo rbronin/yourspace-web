@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Box, Grid, Tab, Tabs, Paper, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { blueGrey } from "@material-ui/core/colors";
+import { lightBlue, blueGrey } from "@material-ui/core/colors";
 import { connect } from "react-redux";
 import AppBar from "../../Components/AppBar";
 import { getPost } from "../../store/actions/posts/get-post";
@@ -11,9 +11,7 @@ import { useToken } from "../../Config";
 import { Skeleton, Alert } from "@material-ui/lab";
 import Post from "../../Components/Post";
 import UserCard from "../../Components/User/UserCard";
-
-const imgUrl =
-  "https://images.unsplash.com/photo-1555524554-0fdb51cd5020?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1372&q=80";
+import { UserAvatar } from "../../Components/utils";
 
 const Profile = ({
   userData,
@@ -66,15 +64,14 @@ const Profile = ({
         <Grid item xs={12} sm={8} lg={6}>
           <Box className={classes.box}>
             {/* User profile image */}
-            <div
-              className={classes.img}
-              style={{ backgroundImage: `url(${imgUrl})` }}
-            ></div>
+            <div className={classes.img}>
+              <UserAvatar size={220} name={userData?.data?.data?.username} />
+            </div>
             <div className={classes.group}>
               <div>
                 <h2 className={classes.name}>{userData?.data?.data?.name ?? "NA"}</h2>
                 <h3 className={classes.title}>
-                  {userData?.data?.data?.username ?? "NA"}
+                  @ {userData?.data?.data?.username ?? "NA"}
                 </h3>
               </div>
               {/* User meta info */}
@@ -310,10 +307,14 @@ const useStyles = makeStyles((theme) => ({
   img: {
     width: 250,
     height: 250,
+    background: lightBlue[50],
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "100%",
-    borderRadius: 10,
+    borderRadius: "50%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     margin: theme.spacing(0, 1),
     [theme.breakpoints.down("lg")]: {
       margin: theme.spacing(1.2, 1),

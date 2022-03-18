@@ -100,7 +100,7 @@ function AppBar({ getLoggedUser, loggedUser, logout, searchValue = "" }) {
           <Box display='flex' flexDirection='row'>
             <Box marginX={2} />
             <Avatar className={classes.avatar} component='button' onClick={handleClick}>
-              <UserAvatar name={user?.data?.name} />
+              <UserAvatar name={user?.data?.username} />
             </Avatar>
             <Menu
               id='fade-menu'

@@ -102,7 +102,7 @@ const Feeds = ({
                     flexDirection='column'
                     alignItems='flex-start'
                   >
-                    {user && <UserAvatar name={user?.name} size={100} />}
+                    {user && <UserAvatar name={user?.username} size={100} />}
                     <h3 className={styles.name}>{user?.name}</h3>
                     <h4 className={styles.uname}> @ {user?.username}</h4>
                   </Box>

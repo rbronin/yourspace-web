@@ -49,7 +49,7 @@ body {
 }
 .ri-added {
   color: #4caf50;
-  color: #536dfe;
+  /* color: #536dfe; */
 }
 .ri-remove {
   color: #e85653;
