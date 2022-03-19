@@ -64,7 +64,7 @@ function Login({ login, clearLogin, loginData, authData }) {
         alignItems='center'
       >
         <div className={styles.form}>
-          <h2>
+          <h2 style={{ fontWeight: "normal" }}>
             Login to{" "}
             <Link
               to='/'

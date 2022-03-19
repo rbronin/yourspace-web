@@ -56,7 +56,7 @@ function Signup({ signupByEmail, signupData }) {
       >
         {signupData?.isLoading && <Loading />}
         <div className={styles.form}>
-          <h2>
+          <h2 style={{ fontWeight: "normal" }}>
             Signup to{" "}
             <Link
               to='/'
