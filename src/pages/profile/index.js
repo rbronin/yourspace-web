@@ -45,15 +45,15 @@ const Profile = ({
   const metaInfo = [
     {
       type: "Activity",
-      number: 100,
+      number: postData.data?.data?.length || "",
     },
     {
       type: "Friends",
-      number: 150,
+      number: friendData.data?.result?.length || "",
     },
     {
       type: "Posts",
-      number: 20,
+      number: postData.data?.data?.length || "",
     },
   ];
 
