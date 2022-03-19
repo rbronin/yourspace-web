@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import { blue } from "@material-ui/core/colors";
+import { blue, blueGrey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,14 +17,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
   title: {
-    fontWeight: "bold",
-    color: theme.palette.grey[600],
+    fontWeight: 600,
+    color: blueGrey[600],
     margin: theme.spacing(0),
+    textTransform: "capitalize",
   },
   dateText: {
-    fontWeight: "normal",
-    fontSize: 15,
-    color: theme.palette.grey[600],
+    fontWeight: 500,
+    fontSize: 10,
+    color: blueGrey[500],
     margin: theme.spacing(0, 0, 1),
   },
   content: {
@@ -68,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 2,
   },
   commentBox: {
-    padding: theme.spacing(0.5, 1),
+    padding: theme.spacing(0.5, 4),
     borderTop: `1px solid ${theme.palette.grey[200]}`,
   },
   comment: {
@@ -93,13 +94,13 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: { color: theme.palette.grey[600] },
   user: {
-    fontSize: 16,
-    fontWeight: 700,
+    fontSize: 12,
+    fontWeight: 600,
     margin: theme.spacing(0),
     color: theme.palette.grey[700],
   },
   userComment: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: 500,
     margin: theme.spacing(0),
     color: theme.palette.grey[600],
@@ -133,6 +134,9 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     outline: `1px solid ${theme.palette.grey[300]}`,
     margin: theme.spacing(0, 1, 0, 0),
+  },
+  liked: {
+    background: theme.palette.primary.main,
   },
 }));
 

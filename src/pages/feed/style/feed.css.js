@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+import { blueGrey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +33,21 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       padding: theme.spacing(0),
     },
+  },
+  name: {
+    fontSize: 23,
+    fontWeight: 600,
+    margin: 0,
+    marginTop: 5,
+    color: blueGrey[600],
+    textTransform: "capitalize",
+  },
+  uname: {
+    fontSize: 17,
+    fontWeight: 500,
+    margin: 0,
+    color: blueGrey[400],
+    textTransform: "lowercase",
   },
 }));
 

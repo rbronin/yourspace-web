@@ -5,10 +5,12 @@ import { clearCreatePost, createNewPost } from "../../store/actions/posts/create
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
 import { Alert } from "@material-ui/lab";
+import { useToken } from "../../Config";
+import { UserAvatar } from "../utils";
 
 const CreatePostForm = ({
   user = {},
-  onClose = () => {},
+  closeModal,
   createPost,
   clearCreatePost,
   createPostData,
@@ -18,10 +20,19 @@ const CreatePostForm = ({
     picture: new FormData(),
   });
   const classes = useStyles(post);
+  const token = useToken();
 
   useEffect(() => {
     clearCreatePost();
   }, []); //eslint-disable-line
+  useEffect(() => {
+    if (createPostData?.data?.message) {
+      setTimeout(() => {
+        clearCreatePost();
+        closeModal();
+      }, 1000);
+    }
+  }, [createPostData]); //eslint-disable-line
 
   const handleInput = (e) => {
     let value = e.target.value;
@@ -50,17 +61,14 @@ const CreatePostForm = ({
   const handlePostData = (e) => {
     e.preventDefault();
     clearCreatePost();
-    createPost(post);
-    // console.log({ data: post.content, file: post.picture.get("picture") });
+    createPost({ data: post, token });
   };
-
-  console.log({ createPostData });
 
   return (
     <div className={classes.root}>
       {createPostData.isDone && createPostData.isError && (
         <Alert severity='error' variant='standard'>
-          {createPostData?.error?.message}
+          {createPostData?.error?.response?.data.error}
         </Alert>
       )}
       {createPostData.isDone && createPostData.data && (
@@ -70,17 +78,17 @@ const CreatePostForm = ({
       )}
       <div className={classes.row}>
         <h2 className={classes.heading}>Create New post</h2>
-        <IconButton onClick={onClose} color='default'>
+        <IconButton onClick={closeModal} color='default'>
           <i className='ri-close-fill ri-1x'></i>
         </IconButton>
       </div>
       <div className={classes.divider}></div>
       <div className={classes.rowStart}>
         <Avatar className={classes.avatar} variant='circle'>
-          {"A"}
+          <UserAvatar name={user?.username} />
         </Avatar>
 
-        <h3 className={classes.title}>{user?.name ?? "Ravi Bharti"}</h3>
+        <h3 className={classes.title}>{user?.name ?? "??"}</h3>
       </div>
       {/* *** * */}
       <form className={classes.form} onSubmit={handlePostData}>

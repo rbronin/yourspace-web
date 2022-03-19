@@ -1,18 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { AppBar as MuiAppBar, TextField } from "@material-ui/core";
 import { Toolbar, IconButton, Avatar } from "@material-ui/core";
 import { Menu, MenuItem, Fade } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { useToken } from "../../Config";
 import useStyles from "./style/index.css";
+import { getUser } from "../../store/actions/users/user";
+import { connect } from "react-redux";
+import { Logout } from "../../store/actions/auth/logout";
+import { UserAvatar } from "../utils/index";
 
-export default function AppBar() {
+function AppBar({ getLoggedUser, loggedUser, logout, searchValue = "" }) {
   const [isOpen, setIsOpen] = useState(false);
   const [anchorEL, setAnchorEL] = useState(null);
+  const [searchStr, setSearchStr] = useState(searchValue);
   const classes = useStyles();
-  const avatar = "A";
   const history = useHistory();
+  const token = useToken();
+
+  useEffect(() => {
+    getLoggedUser(token);
+  }, []); //eslint-disable-line
+
+  const user = useMemo(() => {
+    const { isDone, data } = loggedUser;
+    if (isDone && data !== null) {
+      return loggedUser.data;
+    } else {
+      return {};
+    }
+  }, [loggedUser]);
 
   const openMenu = () => {
     setIsOpen(!isOpen);
@@ -29,10 +48,24 @@ export default function AppBar() {
   const profileRoute = () => {
     history.push("/profile");
   };
-  const accountRoute = () => {
-    history.push("/account");
+  // const accountRoute = () => {
+  //   history.push("/account");
+  // };
+  const handleLogout = () => {
+    logout();
+    history.push("/");
   };
-  const logout = () => {};
+  const feedRoute = () => {
+    history.push("/feed");
+  };
+
+  const getSearchStr = (e) => {
+    setSearchStr(e.target.value);
+  };
+  const handleSearch = (e) => {
+    e.preventDefault();
+    history.push(`/search?s=${searchStr}`);
+  };
 
   return (
     <MuiAppBar position='static' variant='elevation' elevation={1} color='inherit'>
@@ -50,20 +83,24 @@ export default function AppBar() {
             justifyContent='start'
             alignItems='center'
           >
-            <IconButton>
+            <IconButton onClick={feedRoute}>
               <i className={`ri-space-ship-line ${classes.logo}`}></i>
             </IconButton>
-            <TextField
-              size='small'
-              type='text'
-              variant='outlined'
-              placeholder='Seacrh by name...'
-            />
+            <form onSubmit={handleSearch}>
+              <TextField
+                onChange={getSearchStr}
+                size='small'
+                type='search'
+                variant='outlined'
+                placeholder='Seacrh by name...'
+                value={searchStr}
+              />
+            </form>
           </Box>
           <Box display='flex' flexDirection='row'>
             <Box marginX={2} />
             <Avatar className={classes.avatar} component='button' onClick={handleClick}>
-              {avatar || "A"}
+              <UserAvatar name={user?.data?.username} />
             </Avatar>
             <Menu
               id='fade-menu'
@@ -74,8 +111,8 @@ export default function AppBar() {
               TransitionComponent={Fade}
             >
               <MenuItem onClick={profileRoute}>Profile</MenuItem>
-              <MenuItem onClick={accountRoute}>Account</MenuItem>
-              <MenuItem onClick={logout}>Logout</MenuItem>
+              {/* <MenuItem onClick={accountRoute}>Account</MenuItem> */}
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </Box>
         </Grid>
@@ -83,3 +120,24 @@ export default function AppBar() {
     </MuiAppBar>
   );
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    ...ownProps,
+    loggedUser: state.LoggedUserReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    ...ownProps,
+    getLoggedUser: (payload) => {
+      dispatch(getUser(payload));
+    },
+    logout: () => {
+      dispatch(Logout());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppBar);

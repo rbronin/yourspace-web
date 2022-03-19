@@ -1,18 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Grid from "@material-ui/core/Grid";
-import { Button, FormControl, TextField, Link, Typography } from "@material-ui/core";
+import { Button, FormControl, TextField } from "@material-ui/core";
+import { Typography, useTheme } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import useStyles from "./style/login.css";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
 import { emailLogin, clearLogin } from "../../store/actions/auth/auth";
 import Loading from "../../Components/utils/Loading";
-import { storeToken } from "../../Config";
-import { useHistory } from "react-router";
+import { useHistory, useLocation, Link } from "react-router-dom";
 
-function Login({ login, clearLogin, loginData }) {
+function Login({ login, clearLogin, loginData, authData }) {
   const styles = useStyles();
   const history = useHistory();
+  const theme = useTheme();
+  const { state } = useLocation();
+  const pathTo = useMemo(() => {
+    if (state?.hasOwnProperty("from")) {
+      if (state?.from?.hasOwnProperty("pathname")) {
+        return state?.from?.pathname;
+      }
+      return "/feed";
+    } else {
+      return "/feed";
+    }
+  }, [state]);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -36,13 +48,10 @@ function Login({ login, clearLogin, loginData }) {
 
   useEffect(() => {
     const { isDone, data } = loginData;
-    if (isDone && data !== null) {
-      storeToken(data.data.auth_token);
-      history.push("/feed", {
-        token: data.data.auth_token,
-      });
+    if (isDone && data !== null && authData.data !== null) {
+      history.push(pathTo);
     }
-  }, [loginData]); //eslint-disable-line
+  }, [loginData, authData]); //eslint-disable-line
 
   return (
     <div className={styles.root}>
@@ -55,8 +64,20 @@ function Login({ login, clearLogin, loginData }) {
         alignItems='center'
       >
         <div className={styles.form}>
-          <h2>Login to codespace</h2>
-          {loginData?.isError && <Alert severity='error'>{loginData?.error}</Alert>}
+          <h2>
+            Login to{" "}
+            <Link
+              to='/'
+              style={{
+                color: theme.palette.primary.main,
+              }}
+            >
+              yourspace
+            </Link>{" "}
+          </h2>
+          {loginData?.isError && (
+            <Alert severity='error'>{loginData?.error?.response?.data}</Alert>
+          )}
           <form onSubmit={handleLogin}>
             <FormControl margin='dense' fullWidth>
               <TextField
@@ -93,7 +114,7 @@ function Login({ login, clearLogin, loginData }) {
               </Typography>
             </FormControl>
             <FormControl margin='dense' fullWidth>
-              <Link href='/signup' style={{ textAlign: "center" }}>
+              <Link to='/signup' style={{ textAlign: "center" }}>
                 Signup
               </Link>
             </FormControl>
@@ -108,6 +129,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     ...ownProps,
     loginData: state.LoginReducer,
+    authData: state.AuthReducer,
   };
 };
 

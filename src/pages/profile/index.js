@@ -1,18 +1,46 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Grid, Tab, Tabs, Paper, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { blueGrey } from "@material-ui/core/colors";
+import { lightBlue, blueGrey } from "@material-ui/core/colors";
+import { connect } from "react-redux";
+import AppBar from "../../Components/AppBar";
+import { getPost } from "../../store/actions/posts/get-post";
+import { getCollections } from "../../store/actions/users/collections";
+import { getFriends } from "../../store/actions/users/friends";
+import { useToken } from "../../Config";
+import { Skeleton, Alert } from "@material-ui/lab";
+import Post from "../../Components/Post";
+import UserCard from "../../Components/User/UserCard";
+import { UserAvatar } from "../../Components/utils";
 
-const imgUrl =
-  "https://images.unsplash.com/photo-1555524554-0fdb51cd5020?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1372&q=80";
-
-const Profile = () => {
+const Profile = ({
+  userData,
+  getPosts,
+  postData,
+  loggedUser,
+  getCollections,
+  getFriends,
+  collectionData,
+  friendData,
+}) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const token = useToken();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    if (value === 0 && postData.data === null) {
+      getPosts({ token: token });
+    } else if (value === 1 && friendData.data === null) {
+      getFriends({ token: token });
+    } else if (value === 2 && collectionData.data === null) {
+      getCollections({ token: token });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   const metaInfo = [
     {
@@ -30,80 +58,265 @@ const Profile = () => {
   ];
 
   return (
-    <Grid container justify='center' alignItems='center'>
-      <Grid item xs={12} sm={10} lg={8}>
-        <Box className={classes.box}>
-          {/* User profile image */}
-          <div
-            className={classes.img}
-            style={{ backgroundImage: `url(${imgUrl})` }}
-          ></div>
-          <div className={classes.group}>
-            <div>
-              <h2 className={classes.name}>Alison Anderson</h2>
-              <h3 className={classes.title}>Web Devloper</h3>
+    <>
+      <AppBar />
+      <Grid container justify='center' alignItems='center'>
+        <Grid item xs={12} sm={8} lg={6}>
+          <Box className={classes.box}>
+            {/* User profile image */}
+            <div className={classes.img}>
+              <UserAvatar size={220} name={userData?.data?.data?.username} />
             </div>
-            {/* User meta info */}
-            <Box
-              dir='row'
-              display='flex'
-              alignItems='flex-start'
-              className={classes.metaGroup}
-            >
-              {metaInfo.map((item) => (
-                <div className={classes.itemGroup}>
-                  <h4 className={classes.item}>{item.type}</h4>
-                  <h5 className={classes.number}>{item.number}</h5>
-                </div>
-              ))}
-            </Box>
+            <div className={classes.group}>
+              <div>
+                <h2 className={classes.name}>{userData?.data?.data?.name ?? "NA"}</h2>
+                <h3 className={classes.title}>
+                  @ {userData?.data?.data?.username ?? "NA"}
+                </h3>
+              </div>
+              {/* User meta info */}
+              <Box
+                dir='row'
+                display='flex'
+                alignItems='flex-start'
+                className={classes.metaGroup}
+              >
+                {metaInfo.map((item) => (
+                  <div className={classes.itemGroup}>
+                    <h4 className={classes.item}>{item.type}</h4>
+                    <h5 className={classes.number}>{item.number}</h5>
+                  </div>
+                ))}
+              </Box>
 
-            {/* Actions */}
-            <Box className={classes.actions}>
-              <Button variant='outlined' color='primary' style={{ marginRight: 30 }}>
-                Chat
-              </Button>
-              <Button variant='outlined' color='secondary'>
-                Follow
-              </Button>
-            </Box>
-          </div>
-        </Box>
-        <Box>
-          {/* info */}
-          <Paper variant='outlined' className={classes.root}>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              indicatorColor='primary'
-              textColor='primary'
-              centered
-            >
-              <Tab label='Posts' />
-              <Tab label='Friends' />
-              <Tab label='Collections' />
-            </Tabs>
-          </Paper>
-        </Box>
+              {/* Actions */}
+              {loggedUser.data?.data?._id !== userData.data?.data?._id && (
+                <Box className={classes.actions}>
+                  <Button
+                    disabled
+                    variant='outlined'
+                    color='primary'
+                    style={{ marginRight: 30 }}
+                  >
+                    Chat
+                  </Button>
+
+                  <Button variant='outlined' color='secondary'>
+                    Follow
+                  </Button>
+                </Box>
+              )}
+            </div>
+          </Box>
+          <Box>
+            {/* info */}
+            <Paper variant='outlined' className={classes.root}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                indicatorColor='primary'
+                textColor='inherit'
+                centered
+              >
+                <Tab label='Posts' />
+                <Tab label='Friends' />
+                <Tab label='Collections' />
+              </Tabs>
+              <Box
+                width='full'
+                bgcolor='white'
+                minHeight='200px'
+                borderRadius='0px 0px 10px 10px'
+              >
+                <TabPanel color='black' value={value} index={0} style={{ paddingX: 10 }}>
+                  {postData.isLoading &&
+                    [1, 2, 3, 4].map((item) => {
+                      return (
+                        <Box width='70%' marginX='auto' marginY={2}>
+                          <Box
+                            display='flex'
+                            justifyContent='space-between'
+                            mb={1}
+                            width='100%'
+                          >
+                            <Skeleton
+                              animation='wave'
+                              variant='circle'
+                              width={40}
+                              height={40}
+                            />
+                            <Skeleton animation='wave' variant='text' width='90%' />
+                          </Box>
+                          <Skeleton
+                            animation='wave'
+                            variant='rect'
+                            width='full'
+                            height={118}
+                          />
+                        </Box>
+                      );
+                    })}
+                  {postData.isError && (
+                    <Alert severity='error'>{postData.error?.response?.data}</Alert>
+                  )}
+                  <Box className={classes.tabBox}>
+                    {postData.data &&
+                      postData.data?.data?.map((post) => {
+                        return <Post post={post} loggedUser={loggedUser.data.data} />;
+                      })}
+                  </Box>
+                </TabPanel>
+                <TabPanel color='black' value={value} index={1}>
+                  <Box className={classes.tabBox}>
+                    {friendData.isLoading &&
+                      [1, 2].map((item) => {
+                        return (
+                          <Box width='70%' marginX='auto' marginY={2}>
+                            <Box
+                              display='flex'
+                              justifyContent='space-between'
+                              mb={1}
+                              width='100%'
+                            >
+                              <Skeleton
+                                animation='wave'
+                                variant='circle'
+                                width={40}
+                                height={40}
+                              />
+                              <Skeleton animation='wave' variant='text' width='90%' />
+                            </Box>
+                          </Box>
+                        );
+                      })}
+                    {friendData.isError && (
+                      <Alert severity='error'>
+                        {collectionData.error?.response?.data}
+                      </Alert>
+                    )}
+                    {friendData.data &&
+                      friendData.data?.result.map((friend) => {
+                        return (
+                          <UserCard user={friend} key={friend?._id} isFollowed={true} />
+                        );
+                      })}
+                  </Box>
+                </TabPanel>
+                <TabPanel color='black' value={value} index={2}>
+                  <Box className={classes.tabBox}>
+                    {collectionData.isLoading &&
+                      [1, 2].map((item) => {
+                        return (
+                          <Box width='70%' marginX='auto' marginY={2}>
+                            <Box
+                              display='flex'
+                              justifyContent='space-between'
+                              mb={1}
+                              width='100%'
+                            >
+                              <Skeleton
+                                animation='wave'
+                                variant='circle'
+                                width={40}
+                                height={40}
+                              />
+                              <Skeleton animation='wave' variant='text' width='90%' />
+                            </Box>
+                            <Skeleton
+                              animation='wave'
+                              variant='rect'
+                              width='full'
+                              height={118}
+                            />
+                          </Box>
+                        );
+                      })}
+                    {postData.isError && (
+                      <Alert severity='error'>
+                        {collectionData.error?.response?.data}
+                      </Alert>
+                    )}
+                    {collectionData.data &&
+                      collectionData.data?.result.map((item) => {
+                        return <Post post={item} loggedUser={loggedUser.data.data} />;
+                      })}
+                  </Box>
+                </TabPanel>
+              </Box>
+            </Paper>
+          </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 
-export default Profile;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    ...ownProps,
+    userData: state.LoggedUserReducer,
+    postData: state.GetPostReducer,
+    loggedUser: state.LoggedUserReducer,
+    collectionData: state.GetCollectionsReducer,
+    friendData: state.GetFriendsReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    ...ownProps,
+    getPosts: (payload) => {
+      dispatch(getPost(payload));
+    },
+    getCollections: (payload) => {
+      dispatch(getCollections(payload));
+    },
+    getFriends: (payload) => {
+      dispatch(getFriends(payload));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+
+function TabPanel({ children, value, index, style, ...other }) {
+  return (
+    <div
+      role='tabpanel'
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={1} color='#000000'>
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    background: blueGrey[50],
+    background: theme.palette.primary.main,
+    color: "#ffffff",
+    borderColor: theme.palette.grey[300],
+    marginBottom: 15,
+    borderRadius: 10,
   },
   img: {
     width: 250,
     height: 250,
+    background: lightBlue[50],
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "100%",
-    borderRadius: 10,
+    borderRadius: "50%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     margin: theme.spacing(0, 1),
     [theme.breakpoints.down("lg")]: {
       margin: theme.spacing(1.2, 1),
@@ -142,7 +355,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   box: {
-    boxShadow: theme.shadows[1],
+    background: theme.palette.common.white,
+    // boxShadow: theme.shadows[1],
+    border: `1px solid ${theme.palette.grey[300]}`,
     margin: theme.spacing(2, 0),
     borderRadius: 10,
     display: "flex",
@@ -154,7 +369,21 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       flexDirection: "column",
       alignItems: "center",
+      margin: theme.spacing(0, 0),
+      paddingTop: 15,
       boxShadow: theme.shadows[0],
+    },
+  },
+  tabBox: {
+    paddingX: 3,
+    [theme.breakpoints.down("xl")]: {
+      paddingX: 3,
+    },
+    [theme.breakpoints.down("lg")]: {
+      paddingX: 2,
+    },
+    [theme.breakpoints.down("xs")]: {
+      paddingX: 1,
     },
   },
   metaGroup: {
