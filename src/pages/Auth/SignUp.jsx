@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
-import { Button, FormControl, TextField, Typography, Link } from "@material-ui/core";
+import { Button, FormControl, TextField, Typography, useTheme } from "@material-ui/core";
 import { connect } from "react-redux";
 import { emailSignup, clearSignup } from "../../store/actions/auth/auth";
 import useStyles from "./style/login.css";
 import { Alert } from "@material-ui/lab";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Loading } from "../../Components";
 function Signup({ signupByEmail, signupData }) {
   const styles = useStyles();
+  const theme = useTheme();
   const history = useHistory();
   const [newUser, setNewUser] = useState({
     name: "",
@@ -55,7 +56,17 @@ function Signup({ signupByEmail, signupData }) {
       >
         {signupData?.isLoading && <Loading />}
         <div className={styles.form}>
-          <h2>Signup to yourspace</h2>
+          <h2>
+            Signup to{" "}
+            <Link
+              to='/'
+              style={{
+                color: theme.palette.primary.main,
+              }}
+            >
+              yourspace
+            </Link>{" "}
+          </h2>
           {signupData?.data && (
             <Alert severity='success' variant='filled'>
               {signupData?.data?.message}
@@ -126,7 +137,7 @@ function Signup({ signupByEmail, signupData }) {
               </Typography>
             </FormControl>
             <FormControl margin='dense' fullWidth>
-              <Link href='/signin' style={{ textAlign: "center" }}>
+              <Link to='/signin' style={{ textAlign: "center" }}>
                 Signin
               </Link>
             </FormControl>

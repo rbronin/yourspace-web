@@ -1,17 +1,19 @@
 import React, { useState, useEffect, useMemo } from "react";
 import Grid from "@material-ui/core/Grid";
-import { Button, FormControl, TextField, Link, Typography } from "@material-ui/core";
+import { Button, FormControl, TextField } from "@material-ui/core";
+import { Typography, useTheme } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import useStyles from "./style/login.css";
 import { withCookies } from "react-cookie";
 import { connect } from "react-redux";
 import { emailLogin, clearLogin } from "../../store/actions/auth/auth";
 import Loading from "../../Components/utils/Loading";
-import { useHistory, useLocation } from "react-router";
+import { useHistory, useLocation, Link } from "react-router-dom";
 
 function Login({ login, clearLogin, loginData, authData }) {
   const styles = useStyles();
   const history = useHistory();
+  const theme = useTheme();
   const { state } = useLocation();
   const pathTo = useMemo(() => {
     if (state?.hasOwnProperty("from")) {
@@ -62,7 +64,17 @@ function Login({ login, clearLogin, loginData, authData }) {
         alignItems='center'
       >
         <div className={styles.form}>
-          <h2>Login to yourspace</h2>
+          <h2>
+            Login to{" "}
+            <Link
+              to='/'
+              style={{
+                color: theme.palette.primary.main,
+              }}
+            >
+              yourspace
+            </Link>{" "}
+          </h2>
           {loginData?.isError && (
             <Alert severity='error'>{loginData?.error?.response?.data}</Alert>
           )}
@@ -102,7 +114,7 @@ function Login({ login, clearLogin, loginData, authData }) {
               </Typography>
             </FormControl>
             <FormControl margin='dense' fullWidth>
-              <Link href='/signup' style={{ textAlign: "center" }}>
+              <Link to='/signup' style={{ textAlign: "center" }}>
                 Signup
               </Link>
             </FormControl>

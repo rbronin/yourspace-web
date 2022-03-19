@@ -75,10 +75,10 @@ function MainSection() {
     >
       <Grid item xs={12} sm={6} lg={6} xl={6}>
         <h2 className={styles.mainHeading}>
-          Share your life's stacks and enjoy together.
+          Share your life's bytes and enjoy together.
         </h2>
         <Typography variant='body1' component='p'>
-          Enjoy the awesome moments with friends!
+          Enjoy the awesome moments with friends
         </Typography>
 
         <Button
