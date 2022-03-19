@@ -94,13 +94,13 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: { color: theme.palette.grey[600] },
   user: {
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: 600,
     margin: theme.spacing(0),
     color: theme.palette.grey[700],
   },
   userComment: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: 500,
     margin: theme.spacing(0),
     color: theme.palette.grey[600],

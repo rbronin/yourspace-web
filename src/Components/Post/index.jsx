@@ -12,6 +12,7 @@ import { UserAvatar } from "../utils";
 const Post = ({ post = {}, loggedUser = {} }) => {
   const styles = useStyles();
   const token = useToken();
+  console.log({ post });
   const [likedRes, setLikedRes] = useState([]);
   const [comments, setComments] = useState({
     show: false,
@@ -195,13 +196,14 @@ export default Post;
 
 const Comment = ({ comment }) => {
   const styles = useStyles();
+  console.log({ comment });
   return (
     <div className={styles.comment}>
       <Avatar sizes='lg' className={styles.avatar}>
-        <UserAvatar name={comment?.id} />
+        <UserAvatar name={comment?._id} />
       </Avatar>
       <div className={styles.commentArea}>
-        <p className={styles.user}>{comment?.user?.name || "NA"}</p>
+        <p className={styles.user}>{comment?.id?.name || "NA"}</p>
         <p className={styles.userComment}>{comment?.body}</p>
       </div>
     </div>
@@ -221,7 +223,7 @@ const AddComment = ({ avatar, onCommentPost }) => {
   };
   return (
     <Box display='flex' flexDirection='row' alignItems='center' paddingX={1}>
-      <Avatar sizes='lg' className={styles.avatar}>
+      <Avatar sizes='sm' className={styles.avatar}>
         <UserAvatar name={avatar} />
       </Avatar>
       <form className={styles.row} onSubmit={handleSubmit}>

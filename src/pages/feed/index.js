@@ -11,6 +11,7 @@ import useStyles from "./style/feed.css";
 import { connect } from "react-redux";
 import { clearFeed, getFeed } from "../../store/actions/posts/feed";
 import { getRecommendation } from "../../store/actions/users/recommend";
+import { getFriends } from "../../store/actions/users/friends";
 import UserCard from "../../Components/User/UserCard";
 import { useToken } from "../../Config";
 import { UserAvatar } from "../../Components/utils";
@@ -23,6 +24,7 @@ const Feeds = ({
   loggedUser,
   userRecommendData,
   recommendedUser,
+  getFriends,
 }) => {
   const styles = useStyles();
   const [openModal, setOpenModal] = useState(false);
@@ -34,6 +36,7 @@ const Feeds = ({
   useEffect(() => {
     if (userFeeds.isDone === true && userFeeds.data !== null) {
       recommendedUser({ token });
+      getFriends({ token });
     }
   }, [userFeeds]); //eslint-disable-line
 
@@ -218,6 +221,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     recommendedUser: (payload) => {
       dispatch(getRecommendation(payload));
+    },
+    getFriends: (payload) => {
+      dispatch(getFriends(payload));
     },
   };
 };

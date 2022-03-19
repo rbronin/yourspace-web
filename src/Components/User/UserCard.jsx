@@ -10,6 +10,8 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { UserAvatar } from "../utils";
 import { user as userAPI } from "../../apis/user";
 import { useToken } from "../../Config";
+import { getFriends } from "../../store/actions/users/friends";
+import { connect } from "react-redux";
 
 // <i className="ri-user-follow-line"></i>
 // <i className="ri-user-unfollow-line"></i>
@@ -18,14 +20,14 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
 
-function UserCard({ user, key }) {
+function UserCard({ user, key, isFollowed = false, getFriends }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [msg, setMsg] = useState({
     type: "",
     data: "",
   });
-  const [followed, setFollowed] = useState(false);
+  const [followed, setFollowed] = useState(isFollowed);
   const token = useToken();
 
   const handleFollow = () => {
@@ -49,6 +51,31 @@ function UserCard({ user, key }) {
         setMsg({
           type: "error",
           data: err.response?.data?.error,
+        });
+      });
+  };
+  const handleUnFollow = () => {
+    userAPI
+      .unfollowUser({
+        userid: user._id,
+        token,
+      })
+      .then((res) => {
+        console.log({ res });
+        setOpen(true);
+        setMsg({
+          type: "success",
+          data: `You have unfollowed ${user?.name}`,
+        });
+        setFollowed((v) => !v);
+        getFriends({ token });
+      })
+      .catch((err) => {
+        console.log({ err });
+        setOpen(true);
+        setMsg({
+          type: "error",
+          data: err.response?.data?.error || err.response?.data?.message || err.message,
         });
       });
   };
@@ -94,7 +121,7 @@ function UserCard({ user, key }) {
               </div>
             </Tooltip>
             <Tooltip title='unfollow'>
-              <IconButton className={classes.unfollowBtn} onClick={handleFollow}>
+              <IconButton className={classes.unfollowBtn} onClick={handleUnFollow}>
                 <i
                   style={{ fontSize: "inherit" }}
                   className='ri-user-unfollow-fill ri-remove'
@@ -113,8 +140,16 @@ function UserCard({ user, key }) {
     </Box>
   );
 }
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    ...ownProps,
+    getFriends: (payload) => {
+      dispatch(getFriends(payload));
+    },
+  };
+};
 
-export default UserCard;
+export default connect(null, mapDispatchToProps)(UserCard);
 
 const useStyles = makeStyles((theme) => ({
   root: {

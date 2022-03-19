@@ -196,7 +196,9 @@ const Profile = ({
                     )}
                     {friendData.data &&
                       friendData.data?.result.map((friend) => {
-                        return <UserCard user={friend} key={friend?._id} />;
+                        return (
+                          <UserCard user={friend} key={friend?._id} isFollowed={true} />
+                        );
                       })}
                   </Box>
                 </TabPanel>
