@@ -1,4 +1,4 @@
-# Codespace
+# Yourspace
 
 ## A minimalist social media for code's stories
 

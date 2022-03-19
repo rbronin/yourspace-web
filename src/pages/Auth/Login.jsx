@@ -62,7 +62,7 @@ function Login({ login, clearLogin, loginData, authData }) {
         alignItems='center'
       >
         <div className={styles.form}>
-          <h2>Login to codespace</h2>
+          <h2>Login to yourspace</h2>
           {loginData?.isError && (
             <Alert severity='error'>{loginData?.error?.response?.data}</Alert>
           )}

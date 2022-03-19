@@ -27,7 +27,7 @@ function HeadSection() {
           <i className='ri-space-ship-line ri-3x'></i>
         </Grid>
         <Grid item>
-          <h2 className={styles.logo}>Codespace</h2>
+          <h2 className={styles.logo}>Yourspace</h2>
         </Grid>
       </Grid>
       <Grid

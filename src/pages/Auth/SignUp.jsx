@@ -55,7 +55,7 @@ function Signup({ signupByEmail, signupData }) {
       >
         {signupData?.isLoading && <Loading />}
         <div className={styles.form}>
-          <h2>Signup to codespace</h2>
+          <h2>Signup to yourspace</h2>
           {signupData?.data && (
             <Alert severity='success' variant='filled'>
               {signupData?.data?.message}

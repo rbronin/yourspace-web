@@ -16,7 +16,7 @@ function About(props) {
       <div className={classes.root}>
         <div className={classes.row}>
           <h2 onClick={homeRoute} className={classes.title}>
-            Codespace
+            Yourspace
           </h2>
         </div>
         <h3 className={classes.about}>About</h3>
@@ -29,7 +29,7 @@ function About(props) {
           <Grid item xs={6} sm={6} lg={6}>
             <div className={classes.content}>
               <div>
-                <h3>Codespace - A minimal social media for your code's stories</h3>
+                <h3>Yourspace - A minimal social media for your code's stories</h3>
                 <p>
                   This project is build as hobby for learning modern web technology . The
                   project build in MERN stack during devlopment of the project got engaged
